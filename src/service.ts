@@ -1,4 +1,5 @@
 import { Injectable, Type } from "@angular/core";
+
 import IntlMessageFormat from "intl-messageformat";
 import IntlRelativeFormat from "intl-relativeformat";
 
@@ -12,7 +13,7 @@ if (!window["INTL_MESSAGES"]) {
     window["INTL_MESSAGES"] = {};
 }
 
-export type IntlFormatter = Intl.DateTimeFormat | Intl.NumberFormat | IntlMessageFormat | IntlRelativeFormat;
+type IntlFormatter = Intl.DateTimeFormat | Intl.NumberFormat | IntlMessageFormat | IntlRelativeFormat;
 
 export abstract class IntlAbstractService {
 
@@ -109,7 +110,7 @@ export abstract class IntlAbstractService {
         this.addFormatterPredefinedOptions(Intl.DateTimeFormat.name, key, options);
     }
 
-    public findFormatterPredefinedOptions<T extends IntlFormatter>(formatter: string | Type<T>, key: string) {
+    public findFormatterPredefinedOptions<T>(formatter: string | Type<T>, key: string) {
 
         let formatterName = typeof formatter === "string" ? formatter : formatter.name;
 

@@ -16,23 +16,17 @@ export declare abstract class IntlAbstractService {
     private locales;
     setLocale(locale: string): void;
     private formatters;
-    private formatterInstance<T>(formatterConstructor, options);
+    private formatterInstance<T>(formatterConstructor, id, constructorArguments?);
+    private formatterInstanceExists<T>(formatter, id);
     private formattersOptions;
-    private addFormatterOptions(formatter, key, options);
+    private addFormatterPredefinedOptions<T>(formatter, key, options);
     addDateTimePredefinedOptions(key: string, options: Intl.DateTimeFormatOptions): void;
-    findformatterOptions<T extends Intl.DateTimeFormat>(formatter: string | Type<T>, key: string): any;
-    private messsageFormats;
-    /**
-     * Cached instances of IntlMessageFormat
-     */
-    private messageFormatters;
+    findFormatterPredefinedOptions<T>(formatter: string | Type<T>, key: string): any;
     private findMessage(namespace, key);
     private isMessageNeedsFormatter(message);
     private extractMessageNamespaceAndKey(namespaceAndKey, useDefaultNamespace?);
     message(key: string, values: any, formats?: any): any;
     m(key: string, values?: any, formats?: any): any;
-    private relativeFormatters;
-    private createRelativeFormatter(options?);
     relative(dateTime: number | Date, options: any): string;
     date(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
     time(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;

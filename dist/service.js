@@ -15,12 +15,6 @@ export var IntlAbstractService = (function () {
         this.namespaceAliases = {};
         this.formatters = {};
         this.formattersOptions = {};
-        this.messsageFormats = {};
-        /**
-         * Cached instances of IntlMessageFormat
-         */
-        this.messageFormatters = {};
-        this.relativeFormatters = {};
         this.setLocale(getBrowserLocale());
         this.defaultNamespace = defaultNamespace;
     }
@@ -38,28 +32,43 @@ export var IntlAbstractService = (function () {
             this.locales.push(segments.slice(0, i).join("-"));
         }
         this.formatters = {};
-        this.messageFormatters = {};
-        this.relativeFormatters = {};
     };
-    IntlAbstractService.prototype.formatterInstance = function (formatterConstructor, options) {
-        var cacheKey = getCacheId([formatterConstructor.name, options]);
+    IntlAbstractService.prototype.formatterInstance = function (formatterConstructor, id, constructorArguments) {
+        var cacheKey = id ? formatterConstructor.name + "_" + id : getCacheId([formatterConstructor.name].concat(constructorArguments));
         var formatter = this.formatters[cacheKey];
-        if (!formatter) {
-            formatter = formatterConstructor.apply(null, [this.locales, options]);
+        if (!formatter && constructorArguments) {
+            if (formatterConstructor === IntlMessageFormat && !this.isMessageNeedsFormatter(constructorArguments[0])) {
+                formatter = IntlMessageFormat.default;
+            }
+            else if (formatterConstructor === IntlRelativeFormat) {
+                formatter = new IntlRelativeFormat(this.locales, constructorArguments[0]);
+            }
+            else if (formatterConstructor === Intl.DateTimeFormat) {
+                formatter = new Intl.DateTimeFormat(this.locales, constructorArguments[0]);
+            }
+            else if (formatterConstructor === Intl.NumberFormat) {
+                formatter = new Intl.NumberFormat(this.locales, constructorArguments[0]);
+            }
             this.formatters[cacheKey] = formatter;
         }
         return formatter;
     };
-    IntlAbstractService.prototype.addFormatterOptions = function (formatter, key, options) {
-        if (!this.formattersOptions[formatter]) {
-            this.formattersOptions[formatter] = {};
+    IntlAbstractService.prototype.formatterInstanceExists = function (formatter, id) {
+        var formatterName = typeof formatter === "string" ? formatter : formatter.name;
+        id = formatterName + "_" + id;
+        return id in this.formatters[id];
+    };
+    IntlAbstractService.prototype.addFormatterPredefinedOptions = function (formatter, key, options) {
+        var formatterName = typeof formatter === "string" ? formatter : formatter.name;
+        if (!this.formattersOptions[formatterName]) {
+            this.formattersOptions[formatterName] = {};
         }
-        this.formattersOptions[formatter][key] = options;
+        this.formattersOptions[formatterName][key] = options;
     };
     IntlAbstractService.prototype.addDateTimePredefinedOptions = function (key, options) {
-        this.addFormatterOptions(Intl.DateTimeFormat.name, key, options);
+        this.addFormatterPredefinedOptions(Intl.DateTimeFormat.name, key, options);
     };
-    IntlAbstractService.prototype.findformatterOptions = function (formatter, key) {
+    IntlAbstractService.prototype.findFormatterPredefinedOptions = function (formatter, key) {
         var formatterName = typeof formatter === "string" ? formatter : formatter.name;
         if (this.formattersOptions[formatterName]) {
             return this.formattersOptions[formatterName][key];
@@ -103,20 +112,16 @@ export var IntlAbstractService = (function () {
         if (!namespaceAndKey.namespace) {
             throw "Undefined i18n messages namespace";
         }
-        var formatter = (namespaceAndKey.namespace in this.messageFormatters) ? this.messageFormatters[namespaceAndKey.namespace][namespaceAndKey.key] : undefined;
-        if (formatter && !formats) {
+        var formatter = this.formatterInstance(IntlMessageFormat, namespaceAndKey.namespace + "," + namespaceAndKey.key);
+        if (formatter && formatter !== IntlMessageFormat.default && !formats) {
             return formatter.format(values);
         }
         var message = this.findMessage(namespaceAndKey.namespace, namespaceAndKey.key);
-        if ((!(namespaceAndKey.namespace in this.messageFormatters) || !(namespaceAndKey.key in this.messageFormatters[namespaceAndKey.namespace])) && this.isMessageNeedsFormatter(message)) {
-            formatter = new IntlMessageFormat(message, this.locale, Object.assign({}, this.messsageFormats, formats));
+        formatter = this.formatterInstance(IntlMessageFormat, namespaceAndKey.namespace + "," + namespaceAndKey.key, [message]);
+        if (formats && formatter !== IntlMessageFormat.default) {
+            formatter = new IntlMessageFormat(message, this.locale, formats);
         }
-        if (this.useCache) {
-            if (!(namespaceAndKey.namespace in this.messageFormatters))
-                this.messageFormatters[namespaceAndKey.namespace] = {};
-            this.messageFormatters[namespaceAndKey.namespace][namespaceAndKey.key] = formatter;
-        }
-        if (formatter) {
+        if (formatter && formatter !== IntlMessageFormat.default) {
             return formatter.format(values);
         }
         else {
@@ -126,16 +131,8 @@ export var IntlAbstractService = (function () {
     IntlAbstractService.prototype.m = function (key, values, formats) {
         return this.message(key, values, formats);
     };
-    IntlAbstractService.prototype.createRelativeFormatter = function (options) {
-        // cache key ("style,units")
-        var key = !options ? "default" : "," + (options.style ? options.style : "") + "," + (options.units ? options.units : "");
-        if (!this.relativeFormatters[key]) {
-            this.relativeFormatters[key] = new IntlRelativeFormat(this.locale, options);
-        }
-        return this.relativeFormatters[key];
-    };
     IntlAbstractService.prototype.relative = function (dateTime, options) {
-        return this.createRelativeFormatter(options).format(typeof dateTime == "number" ? new Date(dateTime) : dateTime, options);
+        return this.formatterInstance(IntlRelativeFormat, undefined, [options]).format(typeof dateTime == "number" ? new Date(dateTime) : dateTime, options);
     };
     IntlAbstractService.prototype.date = function (dateTime, predefinedOptionsOrOptions, options) {
         return this.dateTime0("date", dateTime, predefinedOptionsOrOptions, options);
@@ -147,7 +144,7 @@ export var IntlAbstractService = (function () {
         return this.dateTime0("dateTime", dateTime, predefinedOptionsOrOptions, options);
     };
     IntlAbstractService.prototype.dateTime0 = function (mode, dateTime, predefinedOptionsOrOptions, options) {
-        var predefinedOptions = typeof predefinedOptionsOrOptions === "string" ? this.findformatterOptions(Intl.DateTimeFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions;
+        var predefinedOptions = typeof predefinedOptionsOrOptions === "string" ? this.findFormatterPredefinedOptions(Intl.DateTimeFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions;
         if (options) {
             predefinedOptions = Object.assign({}, predefinedOptions, options);
         }
@@ -185,7 +182,7 @@ export var IntlAbstractService = (function () {
                 predefinedOptions = { year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit" };
             }
         }
-        var formatter = this.formatterInstance(Intl.DateTimeFormat, predefinedOptions);
+        var formatter = this.formatterInstance(Intl.DateTimeFormat, undefined, [predefinedOptions]);
         return formatter.format(dateTime);
     };
     return IntlAbstractService;
