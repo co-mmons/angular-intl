@@ -1,18 +1,20 @@
 import { NgModule } from "@angular/core";
-import { I18nService } from "./service";
-import { I18nTranslatePipe } from "./translate-pipe";
-export var I18nModule = (function () {
-    function I18nModule() {
+import { IntlService } from "./service";
+import { IntlTranslatePipe } from "./translate-pipe";
+import { IntlRelativePipe, IntlRelativeLivePipe } from "./relative-pipe";
+import { IntlDateTimePipe, IntlTimePipe, IntlDatePipe } from "./datetime-pipe";
+export var IntlModule = (function () {
+    function IntlModule() {
     }
-    I18nModule.decorators = [
+    IntlModule.decorators = [
         { type: NgModule, args: [{
-                    declarations: [I18nTranslatePipe],
-                    providers: [I18nService],
-                    exports: [I18nTranslatePipe]
+                    declarations: [IntlTranslatePipe, IntlRelativePipe, IntlRelativeLivePipe, IntlDateTimePipe, IntlTimePipe, IntlDatePipe],
+                    providers: [IntlService],
+                    exports: [IntlTranslatePipe, IntlRelativePipe, IntlRelativeLivePipe, IntlDateTimePipe, IntlTimePipe, IntlDatePipe]
                 },] },
     ];
     /** @nocollapse */
-    I18nModule.ctorParameters = [];
-    return I18nModule;
+    IntlModule.ctorParameters = [];
+    return IntlModule;
 }());
 //# sourceMappingURL=module.js.map

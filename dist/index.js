@@ -1,3 +1,3 @@
-export { I18nService } from "./service";
-export { I18nModule } from "./module";
+export { IntlService } from "./service";
+export { IntlModule } from "./module";
 //# sourceMappingURL=index.js.map

@@ -1,21 +1,21 @@
 import { Pipe } from "@angular/core";
-import { I18nService } from "./service";
-export var I18nTranslatePipe = (function () {
-    function I18nTranslatePipe(service) {
+import { IntlService } from "./service";
+export var IntlTranslatePipe = (function () {
+    function IntlTranslatePipe(service) {
         this.service = service;
     }
-    I18nTranslatePipe.prototype.transform = function (key, values) {
+    IntlTranslatePipe.prototype.transform = function (key, values) {
         return this.service.message(key, values);
     };
-    I18nTranslatePipe.decorators = [
+    IntlTranslatePipe.decorators = [
         { type: Pipe, args: [{
-                    name: "i18nMessage"
+                    name: "intlMessage"
                 },] },
     ];
     /** @nocollapse */
-    I18nTranslatePipe.ctorParameters = [
-        { type: I18nService, },
+    IntlTranslatePipe.ctorParameters = [
+        { type: IntlService, },
     ];
-    return I18nTranslatePipe;
+    return IntlTranslatePipe;
 }());
 //# sourceMappingURL=translate-pipe.js.map

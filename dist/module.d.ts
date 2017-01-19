@@ -1,2 +1,2 @@
-export declare class I18nModule {
+export declare class IntlModule {
 }
