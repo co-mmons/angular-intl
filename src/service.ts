@@ -12,6 +12,8 @@ if (!window["INTL_MESSAGES"]) {
     window["INTL_MESSAGES"] = {};
 }
 
+export type IntlFormatter = Intl.DateTimeFormat | Intl.NumberFormat | IntlMessageFormat | IntlRelativeFormat;
+
 export abstract class IntlAbstractService {
 
     constructor(defaultNamespace?: string) {
@@ -56,42 +58,58 @@ export abstract class IntlAbstractService {
         }
 
         this.formatters = {};
-        this.messageFormatters = {};
-        this.relativeFormatters = {};
     }
 
 
     private formatters: any = {};
 
-    private formatterInstance<T>(formatterConstructor: Type<T>, options: any): T {
+    private formatterInstance<T extends IntlFormatter>(formatterConstructor: Type<T>, id: string, constructorArguments?: any[]): T {
 
-        let cacheKey = getCacheId([formatterConstructor.name, options]);
+        let cacheKey = id ? `${formatterConstructor.name}_${id}` : getCacheId([formatterConstructor.name].concat(constructorArguments));
         let formatter = this.formatters[cacheKey];
 
-        if (!formatter) {
-            formatter = formatterConstructor.apply(null, [this.locales, options]);
+        if (!formatter && constructorArguments) {
+
+            if (formatterConstructor === IntlMessageFormat && !this.isMessageNeedsFormatter(constructorArguments[0])) {
+                formatter = IntlMessageFormat.default;
+            } else if (formatterConstructor === IntlRelativeFormat) {
+                formatter = new IntlRelativeFormat(this.locales, constructorArguments[0]);
+            } else if (formatterConstructor === <any>Intl.DateTimeFormat) {
+                formatter = new Intl.DateTimeFormat(this.locales, constructorArguments[0]);
+            } else if (formatterConstructor === <any>Intl.NumberFormat) {
+                formatter = new Intl.NumberFormat(this.locales, constructorArguments[0]);
+            }
+            
             this.formatters[cacheKey] = formatter;
         }
 
         return formatter;
     }
 
+    private formatterInstanceExists<T extends IntlFormatter>(formatter: string | Type<T>, id: string): boolean {
+        let formatterName = typeof formatter === "string" ? formatter : formatter.name;
+        id = `${formatterName}_${id}`;
+        return id in this.formatters[id];
+    }
+
     private formattersOptions: any = {};
 
-    private addFormatterOptions(formatter: string, key: string, options: any) {
-        
-        if (!this.formattersOptions[formatter]) {
-            this.formattersOptions[formatter] = {};
+    private addFormatterPredefinedOptions<T extends IntlFormatter>(formatter: string | Type<T>, key: string, options: any) {
+
+        let formatterName = typeof formatter === "string" ? formatter : formatter.name;
+
+        if (!this.formattersOptions[formatterName]) {
+            this.formattersOptions[formatterName] = {};
         }
 
-        this.formattersOptions[formatter][key] = options;
+        this.formattersOptions[formatterName][key] = options;
     }
 
     public addDateTimePredefinedOptions(key: string, options: Intl.DateTimeFormatOptions) {
-        this.addFormatterOptions(Intl.DateTimeFormat.name, key, options);
+        this.addFormatterPredefinedOptions(Intl.DateTimeFormat.name, key, options);
     }
 
-    public findformatterOptions<T extends Intl.DateTimeFormat>(formatter: string | Type<T>, key: string) {
+    public findFormatterPredefinedOptions<T extends IntlFormatter>(formatter: string | Type<T>, key: string) {
 
         let formatterName = typeof formatter === "string" ? formatter : formatter.name;
 
@@ -102,13 +120,6 @@ export abstract class IntlAbstractService {
         return undefined;
     }
 
-
-    private messsageFormats: any = {};
-
-    /**
-     * Cached instances of IntlMessageFormat
-     */
-    private messageFormatters: {[namespace: string]: {[key: string]: IntlMessageFormat}} = {};
 
     private findMessage(namespace: string, key: string) {
 
@@ -153,24 +164,21 @@ export abstract class IntlAbstractService {
             throw "Undefined i18n messages namespace";
         }
 
-        let formatter: IntlMessageFormat = (namespaceAndKey.namespace in this.messageFormatters) ? this.messageFormatters[namespaceAndKey.namespace][namespaceAndKey.key] : undefined;
+        let formatter: IntlMessageFormat = this.formatterInstance(IntlMessageFormat, `${namespaceAndKey.namespace},${namespaceAndKey.key}`);
 
-        if (formatter && !formats) {
+        if (formatter && formatter !== IntlMessageFormat.default && !formats) {
             return formatter.format(values);
         }
 
         let message = this.findMessage(namespaceAndKey.namespace, namespaceAndKey.key);
+        
+        formatter = this.formatterInstance(IntlMessageFormat, `${namespaceAndKey.namespace},${namespaceAndKey.key}`, [message]);
 
-        if ((!(namespaceAndKey.namespace in this.messageFormatters) || !(namespaceAndKey.key in this.messageFormatters[namespaceAndKey.namespace])) && this.isMessageNeedsFormatter(message)) {
-            formatter = new IntlMessageFormat(message, this.locale, Object.assign({}, this.messsageFormats, formats));
+        if (formats && formatter !== IntlMessageFormat.default) {
+            formatter = new IntlMessageFormat(message, this.locale, formats);
         }
 
-        if (this.useCache) {
-            if (!(namespaceAndKey.namespace in this.messageFormatters)) this.messageFormatters[namespaceAndKey.namespace] = {};
-            this.messageFormatters[namespaceAndKey.namespace][namespaceAndKey.key] = formatter;
-        }
-
-        if (formatter) {
+        if (formatter && formatter !== IntlMessageFormat.default) {
             return formatter.format(values);
         } else {
             return message;
@@ -182,22 +190,8 @@ export abstract class IntlAbstractService {
     }
 
     
-    private relativeFormatters: {[styleUnits: string]: IntlRelativeFormat} = {};
-
-    private createRelativeFormatter(options?: any): IntlRelativeFormat {
-        
-        // cache key ("style,units")
-        let key = !options ? "default" : `,${options.style ? options.style : ""},${options.units ? options.units : ""}`;
-
-        if (!this.relativeFormatters[key]) {
-            this.relativeFormatters[key] = new IntlRelativeFormat(this.locale, options);
-        }
-
-        return this.relativeFormatters[key];
-    }
-
     public relative(dateTime: number | Date, options: any): string {
-        return this.createRelativeFormatter(options).format(typeof dateTime == "number" ? new Date(dateTime) : dateTime, options);
+        return this.formatterInstance(IntlRelativeFormat, undefined, [options]).format(typeof dateTime == "number" ? new Date(dateTime) : dateTime, options);
     }
 
 
@@ -221,7 +215,7 @@ export abstract class IntlAbstractService {
 
     private dateTime0(mode: string, dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
 
-        let predefinedOptions = typeof predefinedOptionsOrOptions === "string" ? this.findformatterOptions(Intl.DateTimeFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions;
+        let predefinedOptions = typeof predefinedOptionsOrOptions === "string" ? this.findFormatterPredefinedOptions(Intl.DateTimeFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions;
         if (options) {
             predefinedOptions = Object.assign({}, predefinedOptions, options);
         }
@@ -269,7 +263,7 @@ export abstract class IntlAbstractService {
 
         }
 
-        let formatter = this.formatterInstance(Intl.DateTimeFormat, predefinedOptions);
+        let formatter = this.formatterInstance(Intl.DateTimeFormat, undefined, [predefinedOptions]);
         return formatter.format(dateTime);
     }
 }

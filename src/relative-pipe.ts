@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from "@angular/core";
 import { IntlService } from "./service";
 
 @Pipe({
-    name: "intlRelative"
+    name: "intlRelativeStatic"
 })
-export class IntlRelativePipe implements PipeTransform {
+export class IntlRelativeStaticPipe implements PipeTransform {
 
     constructor(private service: IntlService) {
     }
@@ -15,37 +15,50 @@ export class IntlRelativePipe implements PipeTransform {
 }
 
 @Pipe({
-    name: "intlRelativeLive",
+    name: "intlRelative",
     pure: false
 })
-export class IntlRelativeLivePipe implements PipeTransform {
+export class IntlRelativePipe implements PipeTransform {
 
     constructor(private service: IntlService) {
     }
 
-    private lastCallTime: number;
+    private callCount: number = 0;
 
-    private lastCallResult: string;
+    private callTime: number;
+
+    private callResult: string;
 
     transform(dateTime: number | Date, cacheTimeOrOptions?: number | any, options?: any): string {
 
-        let cacheTime: number = typeof cacheTimeOrOptions == "number" ? cacheTimeOrOptions : 0;
         let now: number;
+        let cacheTime: number;
+        
+        if (typeof cacheTimeOrOptions == "number") {
+            cacheTime = cacheTimeOrOptions;
+        } else if (cacheTimeOrOptions && typeof cacheTimeOrOptions === "object") {
+            options = cacheTimeOrOptions
+        }
+
+        if (typeof cacheTime === "undefined") {
+            cacheTime = (this.callCount || 1) * 10;
+        }
 
         if (cacheTime > 0) {
 
             now = Date.now();
 
-            if (this.lastCallTime && this.lastCallTime + (cacheTime * 1000) >= now) {
-                return this.lastCallResult;
+            if (this.callTime && this.callTime + (cacheTime * 1000) >= now) {
+                return this.callResult;
             }
         }
 
         let result = this.service.relative(dateTime, options);
 
         if (cacheTime > 0) {
-            this.lastCallTime = now;
-            this.lastCallResult = result;
+            this.callCount++;
+            this.callTime = now;
+            this.callResult = result;
         }
 
         return result;
