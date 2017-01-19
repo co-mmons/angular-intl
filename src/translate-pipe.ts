@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { I18nService } from "./service";
+import { IntlService } from "./service";
 
 @Pipe({
-    name: "i18nMessage"
+    name: "intlMessage"
 })
-export class I18nTranslatePipe implements PipeTransform {
+export class IntlTranslatePipe implements PipeTransform {
 
-    constructor(private service: I18nService) {
+    constructor(private service: IntlService) {
     }
 
     transform(key: string, values?: any): string {

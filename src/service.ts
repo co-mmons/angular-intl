@@ -1,17 +1,18 @@
 import { Injectable } from "@angular/core";
 import IntlMessageFormat from "intl-messageformat";
+import IntlRelativeFormat from "intl-relativeformat";
 
-declare var I18N_MESSAGES: {
+declare var INTL_MESSAGES: {
     [locale: string]: {
         [key: string]: string
     }
 };
 
-if (!window["I18N_MESSAGES"]) {
-    window["I18N_MESSAGES"] = {};
+if (!window["INTL_MESSAGES"]) {
+    window["INTL_MESSAGES"] = {};
 }
 
-export abstract class I18nAbstractService {
+export abstract class IntlAbstractService {
 
     constructor(defaultNamespace?: string) {
         this.setLocale(getBrowserLocale());
@@ -32,8 +33,6 @@ export abstract class I18nAbstractService {
     public addNamespaceAlias(namespace: string, alias: string) {
         this.namespaceAliases[alias] = namespace;
     }
-    
-    private formats: any = {};
 
     /**
      * Selected locale. By default it takes browser locale.
@@ -44,8 +43,6 @@ export abstract class I18nAbstractService {
      * Selected locale's segments
      */
     private locales: string[];
-
-    private formatters: {[namespace: string]: {[key: string]: IntlMessageFormat}} = {};
 
     public setLocale(locale: string) {
         this.locale = locale;
@@ -58,25 +55,33 @@ export abstract class I18nAbstractService {
             this.locales.push(segments.slice(0, i).join("-"));
         }
 
-        this.formatters = {};
+        this.messageFormatters = {};
     }
+
+
+    private messsageFormats: any = {};
+
+    /**
+     * Cached instances of IntlMessageFormat
+     */
+    private messageFormatters: {[namespace: string]: {[key: string]: IntlMessageFormat}} = {};
 
     private findMessage(namespace: string, key: string) {
 
         for (let locale of this.locales) {
-            if (I18N_MESSAGES && I18N_MESSAGES[namespace] && I18N_MESSAGES[namespace][locale] && I18N_MESSAGES[namespace][locale][key]) {
-                return I18N_MESSAGES[namespace][locale][key];
+            if (INTL_MESSAGES && INTL_MESSAGES[namespace] && INTL_MESSAGES[namespace][locale] && INTL_MESSAGES[namespace][locale][key]) {
+                return INTL_MESSAGES[namespace][locale][key];
             }
         }
 
         return "???";
     }
 
-    private needsFormatter(message: string) {
+    private isMessageNeedsFormatter(message: string) {
         return message.indexOf("{") > -1 || message.indexOf("}") > -1;
     }
 
-    private extractNamespaceAndKey(namespaceAndKey: string, useDefaultNamespace: boolean = true): {namespace: string, key: string} {
+    private extractMessageNamespaceAndKey(namespaceAndKey: string, useDefaultNamespace: boolean = true): {namespace: string, key: string} {
 
         let result = {namespace: undefined, key: undefined};
 
@@ -99,12 +104,12 @@ export abstract class I18nAbstractService {
 
     public message(key: string, values: any, formats?: any) {
 
-        let namespaceAndKey = this.extractNamespaceAndKey(key);
+        let namespaceAndKey = this.extractMessageNamespaceAndKey(key);
         if (!namespaceAndKey.namespace) {
             throw "Undefined i18n messages namespace";
         }
 
-        let formatter: IntlMessageFormat = (namespaceAndKey.namespace in this.formatters) ? this.formatters[namespaceAndKey.namespace][namespaceAndKey.key] : undefined;
+        let formatter: IntlMessageFormat = (namespaceAndKey.namespace in this.messageFormatters) ? this.messageFormatters[namespaceAndKey.namespace][namespaceAndKey.key] : undefined;
 
         if (formatter && !formats) {
             return formatter.format(values);
@@ -112,13 +117,13 @@ export abstract class I18nAbstractService {
 
         let message = this.findMessage(namespaceAndKey.namespace, namespaceAndKey.key);
 
-        if ((!(namespaceAndKey.namespace in this.formatters) || !(namespaceAndKey.key in this.formatters[namespaceAndKey.namespace])) && this.needsFormatter(message)) {
-            formatter = new IntlMessageFormat(message, this.locale, Object.assign({}, this.formats, formats));
+        if ((!(namespaceAndKey.namespace in this.messageFormatters) || !(namespaceAndKey.key in this.messageFormatters[namespaceAndKey.namespace])) && this.isMessageNeedsFormatter(message)) {
+            formatter = new IntlMessageFormat(message, this.locale, Object.assign({}, this.messsageFormats, formats));
         }
 
         if (this.useCache) {
-            if (!(namespaceAndKey.namespace in this.formatters)) this.formatters[namespaceAndKey.namespace] = {};
-            this.formatters[namespaceAndKey.namespace][namespaceAndKey.key] = formatter;
+            if (!(namespaceAndKey.namespace in this.messageFormatters)) this.messageFormatters[namespaceAndKey.namespace] = {};
+            this.messageFormatters[namespaceAndKey.namespace][namespaceAndKey.key] = formatter;
         }
 
         if (formatter) {
@@ -132,10 +137,24 @@ export abstract class I18nAbstractService {
         return this.message(key, values, formats);
     }
 
+    
+    private relativeFormatter: IntlRelativeFormat;
+
+    private createRelativeFormatter(recreate?: boolean): IntlRelativeFormat {
+        if (!this.relativeFormatter || recreate) {
+            this.relativeFormatter = new IntlRelativeFormat(this.locale);
+        }
+
+        return this.relativeFormatter;
+    }
+
+    public relative(dateTime: number | Date, options: any): string {
+        return this.createRelativeFormatter().format(typeof dateTime == "number" ? new Date(dateTime) : dateTime, options);
+    }
 }
 
 @Injectable()
-export class I18nService extends I18nAbstractService {
+export class IntlService extends IntlAbstractService {
 }
 
 /**
