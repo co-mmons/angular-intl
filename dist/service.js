@@ -15,7 +15,7 @@ export var IntlAbstractService = (function () {
         this.namespaceAliases = {};
         this.formatters = {};
         this.formattersOptions = {};
-        this.setLocale(getBrowserLocale());
+        this.locale = getBrowserLocale();
         this.defaultNamespace = defaultNamespace;
     }
     IntlAbstractService.prototype.setDefaultNamespace = function (namespace) {
@@ -24,15 +24,36 @@ export var IntlAbstractService = (function () {
     IntlAbstractService.prototype.addNamespaceAlias = function (namespace, alias) {
         this.namespaceAliases[alias] = namespace;
     };
+    Object.defineProperty(IntlAbstractService.prototype, "locale", {
+        get: function () {
+            return this._locale;
+        },
+        set: function (locale) {
+            this._locale = locale;
+            this._locales = [];
+            var segments = locale.split("-");
+            for (var i = segments.length - 1; i > 0; i--) {
+                this._locales.push(segments.slice(0, i).join("-"));
+            }
+            this.formatters = {};
+        },
+        enumerable: true,
+        configurable: true
+    });
     IntlAbstractService.prototype.setLocale = function (locale) {
         this.locale = locale;
-        this.locales = [];
-        var segments = locale.split("-");
-        for (var i = segments.length - 1; i > 0; i--) {
-            this.locales.push(segments.slice(0, i).join("-"));
-        }
-        this.formatters = {};
+        return this;
     };
+    Object.defineProperty(IntlAbstractService.prototype, "locales", {
+        get: function () {
+            if (this._locales) {
+                return this._locales.slice();
+            }
+            return [];
+        },
+        enumerable: true,
+        configurable: true
+    });
     IntlAbstractService.prototype.formatterInstance = function (formatterConstructor, id, constructorArguments) {
         var cacheKey = id ? formatterConstructor.name + "_" + id : getCacheId([formatterConstructor.name].concat(constructorArguments));
         var formatter = this.formatters[cacheKey];
@@ -41,13 +62,13 @@ export var IntlAbstractService = (function () {
                 formatter = IntlMessageFormat.default;
             }
             else if (formatterConstructor === IntlRelativeFormat) {
-                formatter = new IntlRelativeFormat(this.locales, constructorArguments[0]);
+                formatter = new IntlRelativeFormat(this._locales, constructorArguments[0]);
             }
             else if (formatterConstructor === Intl.DateTimeFormat) {
-                formatter = new Intl.DateTimeFormat(this.locales, constructorArguments[0]);
+                formatter = new Intl.DateTimeFormat(this._locales, constructorArguments[0]);
             }
             else if (formatterConstructor === Intl.NumberFormat) {
-                formatter = new Intl.NumberFormat(this.locales, constructorArguments[0]);
+                formatter = new Intl.NumberFormat(this._locales, constructorArguments[0]);
             }
             this.formatters[cacheKey] = formatter;
         }
@@ -76,7 +97,7 @@ export var IntlAbstractService = (function () {
         return undefined;
     };
     IntlAbstractService.prototype.findMessage = function (namespace, key) {
-        for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this._locales; _i < _a.length; _i++) {
             var locale = _a[_i];
             if (INTL_MESSAGES && INTL_MESSAGES[namespace] && INTL_MESSAGES[namespace][locale] && INTL_MESSAGES[namespace][locale][key]) {
                 return INTL_MESSAGES[namespace][locale][key];
@@ -119,7 +140,7 @@ export var IntlAbstractService = (function () {
         var message = this.findMessage(namespaceAndKey.namespace, namespaceAndKey.key);
         formatter = this.formatterInstance(IntlMessageFormat, namespaceAndKey.namespace + "," + namespaceAndKey.key, [message]);
         if (formats && formatter !== IntlMessageFormat.default) {
-            formatter = new IntlMessageFormat(message, this.locale, formats);
+            formatter = new IntlMessageFormat(message, this._locale, formats);
         }
         if (formatter && formatter !== IntlMessageFormat.default) {
             return formatter.format(values);

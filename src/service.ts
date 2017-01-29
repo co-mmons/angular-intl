@@ -18,8 +18,7 @@ type IntlFormatter = Intl.DateTimeFormat | Intl.NumberFormat | IntlMessageFormat
 export abstract class IntlAbstractService {
 
     constructor(defaultNamespace?: string) {
-        this.setLocale(getBrowserLocale());
-
+        this.locale = getBrowserLocale();
         this.defaultNamespace = defaultNamespace;
     }
 
@@ -40,25 +39,43 @@ export abstract class IntlAbstractService {
     /**
      * Selected locale. By default it takes browser locale.
      */
-    private locale: string;
+    private _locale: string;
 
-    /**
-     * Selected locale's segments
-     */
-    private locales: string[];
+    public get locale(): string {
+        return this._locale;
+    }
 
-    public setLocale(locale: string) {
-        this.locale = locale;
+    public set locale(locale: string) {
+        this._locale = locale;
 
-        this.locales = [];
+        this._locales = [];
 
         let segments = locale.split("-");
 
         for (let i = segments.length - 1; i > 0; i--) {
-            this.locales.push(segments.slice(0, i).join("-"));
+            this._locales.push(segments.slice(0, i).join("-"));
         }
 
         this.formatters = {};
+    }
+
+    public setLocale(locale: string): IntlAbstractService {
+        this.locale = locale;
+        return this;
+    }
+
+    /**
+     * Selected locale's segments
+     */
+    private _locales: string[];
+
+    public get locales(): string[] {
+
+        if (this._locales) {
+            return this._locales.slice();
+        }
+
+        return [];
     }
 
 
@@ -74,11 +91,11 @@ export abstract class IntlAbstractService {
             if (formatterConstructor === IntlMessageFormat && !this.isMessageNeedsFormatter(constructorArguments[0])) {
                 formatter = IntlMessageFormat.default;
             } else if (formatterConstructor === IntlRelativeFormat) {
-                formatter = new IntlRelativeFormat(this.locales, constructorArguments[0]);
+                formatter = new IntlRelativeFormat(this._locales, constructorArguments[0]);
             } else if (formatterConstructor === <any>Intl.DateTimeFormat) {
-                formatter = new Intl.DateTimeFormat(this.locales, constructorArguments[0]);
+                formatter = new Intl.DateTimeFormat(this._locales, constructorArguments[0]);
             } else if (formatterConstructor === <any>Intl.NumberFormat) {
-                formatter = new Intl.NumberFormat(this.locales, constructorArguments[0]);
+                formatter = new Intl.NumberFormat(this._locales, constructorArguments[0]);
             }
             
             this.formatters[cacheKey] = formatter;
@@ -124,7 +141,7 @@ export abstract class IntlAbstractService {
 
     private findMessage(namespace: string, key: string) {
 
-        for (let locale of this.locales) {
+        for (let locale of this._locales) {
             if (INTL_MESSAGES && INTL_MESSAGES[namespace] && INTL_MESSAGES[namespace][locale] && INTL_MESSAGES[namespace][locale][key]) {
                 return INTL_MESSAGES[namespace][locale][key];
             }
@@ -176,7 +193,7 @@ export abstract class IntlAbstractService {
         formatter = this.formatterInstance(IntlMessageFormat, `${namespaceAndKey.namespace},${namespaceAndKey.key}`, [message]);
 
         if (formats && formatter !== IntlMessageFormat.default) {
-            formatter = new IntlMessageFormat(message, this.locale, formats);
+            formatter = new IntlMessageFormat(message, this._locale, formats);
         }
 
         if (formatter && formatter !== IntlMessageFormat.default) {

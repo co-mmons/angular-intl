@@ -9,12 +9,14 @@ export declare abstract class IntlAbstractService {
     /**
      * Selected locale. By default it takes browser locale.
      */
-    private locale;
+    private _locale;
+    locale: string;
+    setLocale(locale: string): IntlAbstractService;
     /**
      * Selected locale's segments
      */
-    private locales;
-    setLocale(locale: string): void;
+    private _locales;
+    readonly locales: string[];
     private formatters;
     private formatterInstance<T>(formatterConstructor, id, constructorArguments?);
     private formatterInstanceExists<T>(formatter, id);
