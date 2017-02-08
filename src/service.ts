@@ -234,16 +234,10 @@ export abstract class IntlAbstractService {
     private dateTime0(mode: string, dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
 
         let predefinedOptions = typeof predefinedOptionsOrOptions === "string" ? this.findFormatterPredefinedOptions(Intl.DateTimeFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions;
-        if (options) {
-            predefinedOptions = Object.assign({}, predefinedOptions, options);
-        }
+        predefinedOptions = Object.assign({}, predefinedOptions, options);
 
         if (mode == "time") {
             
-            if (!predefinedOptions) {
-                predefinedOptions = {};
-            }
-
             predefinedOptions.year = undefined;
             predefinedOptions.month = undefined;
             predefinedOptions.day = undefined;
@@ -258,10 +252,6 @@ export abstract class IntlAbstractService {
 
         } else if (mode == "date") {
             
-            if (!predefinedOptions) {
-                predefinedOptions = {};
-            }
-
             predefinedOptions.hour = undefined;
             predefinedOptions.minute = undefined;
             predefinedOptions.second = undefined;
@@ -274,10 +264,7 @@ export abstract class IntlAbstractService {
             }
 
         } else {
-
-            if (!predefinedOptions) {
-                predefinedOptions = {year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"};
-            }
+            predefinedOptions = Object.assign({year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"}, predefinedOptions);
 
         }
 

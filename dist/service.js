@@ -166,13 +166,8 @@ export var IntlAbstractService = (function () {
     };
     IntlAbstractService.prototype.dateTime0 = function (mode, dateTime, predefinedOptionsOrOptions, options) {
         var predefinedOptions = typeof predefinedOptionsOrOptions === "string" ? this.findFormatterPredefinedOptions(Intl.DateTimeFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions;
-        if (options) {
-            predefinedOptions = Object.assign({}, predefinedOptions, options);
-        }
+        predefinedOptions = Object.assign({}, predefinedOptions, options);
         if (mode == "time") {
-            if (!predefinedOptions) {
-                predefinedOptions = {};
-            }
             predefinedOptions.year = undefined;
             predefinedOptions.month = undefined;
             predefinedOptions.day = undefined;
@@ -185,9 +180,6 @@ export var IntlAbstractService = (function () {
             }
         }
         else if (mode == "date") {
-            if (!predefinedOptions) {
-                predefinedOptions = {};
-            }
             predefinedOptions.hour = undefined;
             predefinedOptions.minute = undefined;
             predefinedOptions.second = undefined;
@@ -199,9 +191,7 @@ export var IntlAbstractService = (function () {
             }
         }
         else {
-            if (!predefinedOptions) {
-                predefinedOptions = { year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit" };
-            }
+            predefinedOptions = Object.assign({ year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit" }, predefinedOptions);
         }
         var formatter = this.formatterInstance(Intl.DateTimeFormat, undefined, [predefinedOptions]);
         return formatter.format(dateTime);
