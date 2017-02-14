@@ -2,40 +2,40 @@ import { Pipe, PipeTransform } from "@angular/core";
 import { IntlService } from "./service";
 
 @Pipe({
-    name: "intlDateTime"
+    name: "intlDateTimeFormat"
 })
-export class IntlDateTimePipe implements PipeTransform {
+export class IntlDateTimeFormatPipe implements PipeTransform {
 
     constructor(private service: IntlService) {
     }
 
     transform(dateTime: number | Date, options?: any): string {
-        return this.service.dateTime(dateTime, options);
+        return this.service.dateTimeFormat(dateTime, options);
     }
 }
 
 @Pipe({
-    name: "intlDate"
+    name: "intlDateFormat"
 })
-export class IntlDatePipe implements PipeTransform {
+export class IntlDateFormatPipe implements PipeTransform {
 
     constructor(private service: IntlService) {
     }
 
     transform(dateTime: number | Date, options?: any): string {
-        return this.service.date(dateTime, options);
+        return this.service.dateFormat(dateTime, options);
     }
 }
 
 @Pipe({
-    name: "intlTime"
+    name: "intlTimeFormat"
 })
-export class IntlTimePipe implements PipeTransform {
+export class IntlTimeFormatPipe implements PipeTransform {
 
     constructor(private service: IntlService) {
     }
 
     transform(dateTime: number | Date, options?: any): string {
-        return this.service.time(dateTime, options);
+        return this.service.timeFormat(dateTime, options);
     }
 }

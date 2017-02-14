@@ -4,7 +4,7 @@ import { IntlService } from "./service";
 @Pipe({
     name: "intlMessage"
 })
-export class IntlTranslatePipe implements PipeTransform {
+export class IntlMessagePipe implements PipeTransform {
 
     constructor(private service: IntlService) {
     }

@@ -2,23 +2,23 @@ import { Pipe, PipeTransform } from "@angular/core";
 import { IntlService } from "./service";
 
 @Pipe({
-    name: "intlRelativeStatic"
+    name: "intlRelativeFormatStatic"
 })
-export class IntlRelativeStaticPipe implements PipeTransform {
+export class IntlRelativeFormatStaticPipe implements PipeTransform {
 
     constructor(private service: IntlService) {
     }
 
     transform(dateTime: number | Date, options?: any): string {
-        return this.service.relative(dateTime, options);
+        return this.service.relativeFormat(dateTime, options);
     }
 }
 
 @Pipe({
-    name: "intlRelative",
+    name: "intlRelativeFormat",
     pure: false
 })
-export class IntlRelativePipe implements PipeTransform {
+export class IntlRelativeFormatPipe implements PipeTransform {
 
     constructor(private service: IntlService) {
     }
@@ -53,7 +53,7 @@ export class IntlRelativePipe implements PipeTransform {
             }
         }
 
-        let result = this.service.relative(dateTime, options);
+        let result = this.service.relativeFormat(dateTime, options);
 
         if (cacheTime > 0) {
             this.callCount++;

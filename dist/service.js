@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 import { Injectable } from "@angular/core";
+import { Money, BigNumber, Currency } from "@co.mmons/typescript-utils/finance";
 import IntlMessageFormat from "intl-messageformat";
 import IntlRelativeFormat from "intl-relativeformat";
 if (!window["INTL_MESSAGES"]) {
@@ -149,22 +150,19 @@ export var IntlAbstractService = (function () {
             return message;
         }
     };
-    IntlAbstractService.prototype.m = function (key, values, formats) {
-        return this.message(key, values, formats);
-    };
-    IntlAbstractService.prototype.relative = function (dateTime, options) {
+    IntlAbstractService.prototype.relativeFormat = function (dateTime, options) {
         return this.formatterInstance(IntlRelativeFormat, undefined, [options]).format(typeof dateTime == "number" ? new Date(dateTime) : dateTime, options);
     };
-    IntlAbstractService.prototype.date = function (dateTime, predefinedOptionsOrOptions, options) {
-        return this.dateTime0("date", dateTime, predefinedOptionsOrOptions, options);
+    IntlAbstractService.prototype.dateFormat = function (dateTime, predefinedOptionsOrOptions, options) {
+        return this.dateTimeFormatImpl("date", dateTime, predefinedOptionsOrOptions, options);
     };
-    IntlAbstractService.prototype.time = function (dateTime, predefinedOptionsOrOptions, options) {
-        return this.dateTime0("time", dateTime, predefinedOptionsOrOptions, options);
+    IntlAbstractService.prototype.timeFormat = function (dateTime, predefinedOptionsOrOptions, options) {
+        return this.dateTimeFormatImpl("time", dateTime, predefinedOptionsOrOptions, options);
     };
-    IntlAbstractService.prototype.dateTime = function (dateTime, predefinedOptionsOrOptions, options) {
-        return this.dateTime0("dateTime", dateTime, predefinedOptionsOrOptions, options);
+    IntlAbstractService.prototype.dateTimeFormat = function (dateTime, predefinedOptionsOrOptions, options) {
+        return this.dateTimeFormatImpl("dateTime", dateTime, predefinedOptionsOrOptions, options);
     };
-    IntlAbstractService.prototype.dateTime0 = function (mode, dateTime, predefinedOptionsOrOptions, options) {
+    IntlAbstractService.prototype.dateTimeFormatImpl = function (mode, dateTime, predefinedOptionsOrOptions, options) {
         var predefinedOptions = typeof predefinedOptionsOrOptions === "string" ? this.findFormatterPredefinedOptions(Intl.DateTimeFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions;
         predefinedOptions = Object.assign({}, predefinedOptions, options);
         if (mode == "time") {
@@ -195,6 +193,48 @@ export var IntlAbstractService = (function () {
         }
         var formatter = this.formatterInstance(Intl.DateTimeFormat, undefined, [predefinedOptions]);
         return formatter.format(dateTime);
+    };
+    IntlAbstractService.prototype.currencyFormat = function (value, predefinedOptionsOrOptions, additionalOptions) {
+        return this.numberFormatImpl("currency", value, predefinedOptionsOrOptions, additionalOptions);
+    };
+    IntlAbstractService.prototype.numberFormatImpl = function (mode, value, predefinedOptionsOrOptions, additionalOptions) {
+        var options = Object.assign({}, typeof predefinedOptionsOrOptions === "string" ? this.findFormatterPredefinedOptions(Intl.NumberFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions, additionalOptions);
+        if (mode == "currency") {
+            options.style = "currency";
+        }
+        else if (mode == "percent") {
+            options.style = "percent";
+        }
+        else {
+            options.style = "decimal";
+        }
+        if (value instanceof Money) {
+            if (mode == "currency") {
+                options.currency = value.currency.code;
+            }
+            value = value.amount.toNumber();
+        }
+        else if (value instanceof BigNumber) {
+            value = value.toNumber();
+        }
+        else if (Array.isArray(value) && value) {
+            if (mode == "currency") {
+                if (value[0] instanceof Currency) {
+                    options.currency = value[0].code;
+                }
+                else if (value[0]) {
+                    options.currency = value[0];
+                }
+            }
+            if (value[1] instanceof BigNumber) {
+                value = value[1].toNumber();
+            }
+            else {
+                value = value[1];
+            }
+        }
+        var formatter = this.formatterInstance(Intl.NumberFormat, undefined, [options]);
+        return formatter.format(value);
     };
     return IntlAbstractService;
 }());

@@ -1,4 +1,5 @@
 import { Injectable, Type } from "@angular/core";
+import { Money, BigNumber, Currency } from "@co.mmons/typescript-utils/finance";
 
 import IntlMessageFormat from "intl-messageformat";
 import IntlRelativeFormat from "intl-relativeformat";
@@ -14,6 +15,8 @@ if (!window["INTL_MESSAGES"]) {
 }
 
 type IntlFormatter = Intl.DateTimeFormat | Intl.NumberFormat | IntlMessageFormat | IntlRelativeFormat;
+
+export type CurrencyAndNumber = [string | Currency, number | BigNumber];
 
 export abstract class IntlAbstractService {
 
@@ -203,35 +206,31 @@ export abstract class IntlAbstractService {
         }
     }
 
-    public m(key: string, values?: any, formats?: any) {
-        return this.message(key, values, formats);
-    }
-
     
-    public relative(dateTime: number | Date, options: any): string {
+    public relativeFormat(dateTime: number | Date, options: any): string {
         return this.formatterInstance(IntlRelativeFormat, undefined, [options]).format(typeof dateTime == "number" ? new Date(dateTime) : dateTime, options);
     }
 
 
-    public date(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
+    public dateFormat(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
 
-    public date(dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
-        return this.dateTime0("date", dateTime, predefinedOptionsOrOptions, options);
+    public dateFormat(dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
+        return this.dateTimeFormatImpl("date", dateTime, predefinedOptionsOrOptions, options);
     }
 
-    public time(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
+    public timeFormat(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
 
-    public time(dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
-        return this.dateTime0("time", dateTime, predefinedOptionsOrOptions, options);
+    public timeFormat(dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
+        return this.dateTimeFormatImpl("time", dateTime, predefinedOptionsOrOptions, options);
     }
 
-    public dateTime(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
+    public dateTimeFormat(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
 
-    public dateTime(dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
-        return this.dateTime0("dateTime", dateTime, predefinedOptionsOrOptions, options);
+    public dateTimeFormat(dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
+        return this.dateTimeFormatImpl("dateTime", dateTime, predefinedOptionsOrOptions, options);
     }
 
-    private dateTime0(mode: string, dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
+    private dateTimeFormatImpl(mode: string, dateTime: number | Date, predefinedOptionsOrOptions?: string | Intl.DateTimeFormatOptions, options?: Intl.DateTimeFormatOptions): string {
 
         let predefinedOptions = typeof predefinedOptionsOrOptions === "string" ? this.findFormatterPredefinedOptions(Intl.DateTimeFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions;
         predefinedOptions = Object.assign({}, predefinedOptions, options);
@@ -270,6 +269,60 @@ export abstract class IntlAbstractService {
 
         let formatter = this.formatterInstance(Intl.DateTimeFormat, undefined, [predefinedOptions]);
         return formatter.format(dateTime);
+    }
+
+    public currencyFormat(value: Money | CurrencyAndNumber, predefinedOptions: string, additionalOptions?: Intl.NumberFormatOptions);
+
+    public currencyFormat(value: Money | CurrencyAndNumber, options?: Intl.NumberFormatOptions);
+
+    public currencyFormat(value: Money | CurrencyAndNumber, predefinedOptionsOrOptions?: string | Intl.NumberFormatOptions, additionalOptions?: Intl.NumberFormatOptions) {
+        return this.numberFormatImpl("currency", value, predefinedOptionsOrOptions, additionalOptions);
+    }
+
+    private numberFormatImpl(mode: string, value: number | Money | BigNumber | CurrencyAndNumber, predefinedOptionsOrOptions?: string | Intl.NumberFormatOptions, additionalOptions?: Intl.NumberFormatOptions): string {
+        
+        let options: Intl.NumberFormatOptions = Object.assign({}, typeof predefinedOptionsOrOptions === "string" ? this.findFormatterPredefinedOptions(Intl.NumberFormat.name, predefinedOptionsOrOptions) : predefinedOptionsOrOptions, additionalOptions);
+
+        if (mode == "currency") {
+            options.style = "currency";
+        } else if (mode == "percent") {
+            options.style = "percent";
+        } else {
+            options.style = "decimal";
+        }
+
+        if (value instanceof Money) {
+
+            if (mode == "currency") {
+                options.currency = value.currency.code;
+            }
+
+            value = value.amount.toNumber();
+
+        } else if (value instanceof BigNumber) {
+            value = value.toNumber();
+        
+        } else if (Array.isArray(value) && <CurrencyAndNumber>value) {
+
+            if (mode == "currency") {
+
+                if (value[0] instanceof Currency) {
+                    options.currency = (<Currency>value[0]).code;
+                
+                } else if (value[0]) {
+                    options.currency = <string>value[0];
+                }
+            }
+
+            if (value[1] instanceof BigNumber) {
+                value = (<BigNumber>value[1]).toNumber();
+            } else {
+                value = <number>value[1];
+            }
+        }
+
+        let formatter = this.formatterInstance(Intl.NumberFormat, undefined, [options]);
+        return formatter.format(<number>value);
     }
 }
 

@@ -1,4 +1,7 @@
+/// <reference types="bignumber.js" />
 import { Type } from "@angular/core";
+import { Money, BigNumber, Currency } from "@co.mmons/typescript-utils/finance";
+export declare type CurrencyAndNumber = [string | Currency, number | BigNumber];
 export declare abstract class IntlAbstractService {
     constructor(defaultNamespace?: string);
     private useCache;
@@ -28,12 +31,14 @@ export declare abstract class IntlAbstractService {
     private isMessageNeedsFormatter(message);
     private extractMessageNamespaceAndKey(namespaceAndKey, useDefaultNamespace?);
     message(key: string, values: any, formats?: any): any;
-    m(key: string, values?: any, formats?: any): any;
-    relative(dateTime: number | Date, options: any): string;
-    date(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
-    time(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
-    dateTime(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
-    private dateTime0(mode, dateTime, predefinedOptionsOrOptions?, options?);
+    relativeFormat(dateTime: number | Date, options: any): string;
+    dateFormat(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
+    timeFormat(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
+    dateTimeFormat(dateTime: number | Date, options?: Intl.DateTimeFormatOptions): string;
+    private dateTimeFormatImpl(mode, dateTime, predefinedOptionsOrOptions?, options?);
+    currencyFormat(value: Money | CurrencyAndNumber, predefinedOptions: string, additionalOptions?: Intl.NumberFormatOptions): any;
+    currencyFormat(value: Money | CurrencyAndNumber, options?: Intl.NumberFormatOptions): any;
+    private numberFormatImpl(mode, value, predefinedOptionsOrOptions?, additionalOptions?);
 }
 export declare class IntlService extends IntlAbstractService {
 }
