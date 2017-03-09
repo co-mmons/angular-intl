@@ -41,4 +41,5 @@ export declare abstract class IntlAbstractService {
     private numberFormatImpl(mode, value, predefinedOptionsOrOptions?, additionalOptions?);
 }
 export declare class IntlService extends IntlAbstractService {
+    constructor();
 }

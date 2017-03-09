@@ -241,7 +241,7 @@ export var IntlAbstractService = (function () {
 export var IntlService = (function (_super) {
     __extends(IntlService, _super);
     function IntlService() {
-        _super.apply(this, arguments);
+        _super.call(this, null);
     }
     IntlService.decorators = [
         { type: Injectable },

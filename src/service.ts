@@ -328,6 +328,9 @@ export abstract class IntlAbstractService {
 
 @Injectable()
 export class IntlService extends IntlAbstractService {
+    constructor() {
+        super(null);
+    }
 }
 
 /**
