@@ -13,9 +13,9 @@ export var IntlDateTimeFormatPipe = (function () {
                 },] },
     ];
     /** @nocollapse */
-    IntlDateTimeFormatPipe.ctorParameters = [
+    IntlDateTimeFormatPipe.ctorParameters = function () { return [
         { type: IntlService, },
-    ];
+    ]; };
     return IntlDateTimeFormatPipe;
 }());
 export var IntlDateFormatPipe = (function () {
@@ -31,9 +31,9 @@ export var IntlDateFormatPipe = (function () {
                 },] },
     ];
     /** @nocollapse */
-    IntlDateFormatPipe.ctorParameters = [
+    IntlDateFormatPipe.ctorParameters = function () { return [
         { type: IntlService, },
-    ];
+    ]; };
     return IntlDateFormatPipe;
 }());
 export var IntlTimeFormatPipe = (function () {
@@ -49,9 +49,9 @@ export var IntlTimeFormatPipe = (function () {
                 },] },
     ];
     /** @nocollapse */
-    IntlTimeFormatPipe.ctorParameters = [
+    IntlTimeFormatPipe.ctorParameters = function () { return [
         { type: IntlService, },
-    ];
+    ]; };
     return IntlTimeFormatPipe;
 }());
 //# sourceMappingURL=date-time-format-pipe.js.map

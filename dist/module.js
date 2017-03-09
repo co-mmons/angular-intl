@@ -15,7 +15,7 @@ export var IntlModule = (function () {
                 },] },
     ];
     /** @nocollapse */
-    IntlModule.ctorParameters = [];
+    IntlModule.ctorParameters = function () { return []; };
     return IntlModule;
 }());
 //# sourceMappingURL=module.js.map

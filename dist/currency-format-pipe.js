@@ -18,9 +18,9 @@ export var IntlCurrencyFormatPipe = (function () {
                 },] },
     ];
     /** @nocollapse */
-    IntlCurrencyFormatPipe.ctorParameters = [
+    IntlCurrencyFormatPipe.ctorParameters = function () { return [
         { type: IntlService, },
-    ];
+    ]; };
     return IntlCurrencyFormatPipe;
 }());
 //# sourceMappingURL=currency-format-pipe.js.map

@@ -13,9 +13,9 @@ export var IntlRelativeFormatStaticPipe = (function () {
                 },] },
     ];
     /** @nocollapse */
-    IntlRelativeFormatStaticPipe.ctorParameters = [
+    IntlRelativeFormatStaticPipe.ctorParameters = function () { return [
         { type: IntlService, },
-    ];
+    ]; };
     return IntlRelativeFormatStaticPipe;
 }());
 export var IntlRelativeFormatPipe = (function () {
@@ -56,9 +56,9 @@ export var IntlRelativeFormatPipe = (function () {
                 },] },
     ];
     /** @nocollapse */
-    IntlRelativeFormatPipe.ctorParameters = [
+    IntlRelativeFormatPipe.ctorParameters = function () { return [
         { type: IntlService, },
-    ];
+    ]; };
     return IntlRelativeFormatPipe;
 }());
 //# sourceMappingURL=relative-format-pipe.js.map

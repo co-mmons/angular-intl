@@ -13,9 +13,9 @@ export var IntlMessagePipe = (function () {
                 },] },
     ];
     /** @nocollapse */
-    IntlMessagePipe.ctorParameters = [
+    IntlMessagePipe.ctorParameters = function () { return [
         { type: IntlService, },
-    ];
+    ]; };
     return IntlMessagePipe;
 }());
 //# sourceMappingURL=message-pipe.js.map

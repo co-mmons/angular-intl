@@ -247,7 +247,7 @@ export var IntlService = (function (_super) {
         { type: Injectable },
     ];
     /** @nocollapse */
-    IntlService.ctorParameters = [];
+    IntlService.ctorParameters = function () { return []; };
     return IntlService;
 }(IntlAbstractService));
 /**
