@@ -1,4 +1,4 @@
-import { IntlHelper } from "@co.mmons/intl";
+import { IntlHelper } from "@co.mmons/js-intl";
 export declare class IntlService extends IntlHelper {
     /**
      * Returns the language code name from the browser, e.g. "de"

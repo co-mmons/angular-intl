@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { IntlHelper } from "@co.mmons/intl";
+import {Injectable} from "@angular/core";
+import {IntlHelper} from "@co.mmons/js-intl";
 
 @Injectable()
 export class IntlService extends IntlHelper {

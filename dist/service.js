@@ -9,7 +9,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Injectable } from "@angular/core";
-import { IntlHelper } from "@co.mmons/intl";
+import { IntlHelper } from "@co.mmons/js-intl";
 var IntlService = (function (_super) {
     __extends(IntlService, _super);
     function IntlService() {

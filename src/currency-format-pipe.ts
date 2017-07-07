@@ -1,8 +1,8 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { Money, BigNumber, Currency } from "@co.mmons/typescript-utils/finance";
-import { CurrencyAndNumber } from "@co.mmons/intl";
+import {Pipe, PipeTransform} from "@angular/core";
+import {BigNumber} from "@co.mmons/js-utils/core";
+import {Money, Currency, CurrencyAndNumber} from "@co.mmons/js-intl";
 
-import { IntlService } from "./service";
+import {IntlService} from "./service";
 
 @Pipe({
     name: "intlCurrencyFormat"

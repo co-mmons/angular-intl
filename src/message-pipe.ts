@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { IntlService } from "./service";
+import {Pipe, PipeTransform} from "@angular/core";
+import {IntlService} from "./service";
 
 @Pipe({
     name: "intlMessage"

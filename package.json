@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@co.mmons/node-utils": "git://github.com/co-mmons/node-utils.git",
-    "@co.mmons/typescript-utils": "git://github.com/co-mmons/typescript-utils.git",
-    "@co.mmons/intl": "git://github.com/co-mmons/intl.git"
+    "@co.mmons/js-utils": "git://github.com/co-mmons/js-utils.git",
+    "@co.mmons/js-intl": "git://github.com/co-mmons/js-intl.git"
   },
   "peerDependencies": {
     "@angular/common": "^4.0.1",

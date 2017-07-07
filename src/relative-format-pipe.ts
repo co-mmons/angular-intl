@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { IntlService } from "./service";
+import {Pipe, PipeTransform} from "@angular/core";
+import {IntlService} from "./service";
 
 @Pipe({
     name: "intlRelativeFormatStatic"
@@ -33,7 +33,7 @@ export class IntlRelativeFormatPipe implements PipeTransform {
 
         let now: number;
         let cacheTime: number;
-        
+
         if (typeof cacheTimeOrOptions == "number") {
             cacheTime = cacheTimeOrOptions;
         } else if (cacheTimeOrOptions && typeof cacheTimeOrOptions === "object") {
