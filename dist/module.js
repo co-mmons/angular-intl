@@ -4,7 +4,7 @@ import { IntlMessagePipe } from "./message-pipe";
 import { IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe } from "./relative-format-pipe";
 import { IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe } from "./date-time-format-pipe";
 import { IntlCurrencyFormatPipe } from "./currency-format-pipe";
-export var IntlModule = (function () {
+var IntlModule = (function () {
     function IntlModule() {
     }
     IntlModule.decorators = [
@@ -18,4 +18,5 @@ export var IntlModule = (function () {
     IntlModule.ctorParameters = function () { return []; };
     return IntlModule;
 }());
+export { IntlModule };
 //# sourceMappingURL=module.js.map

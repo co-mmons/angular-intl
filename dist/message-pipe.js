@@ -1,6 +1,6 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-export var IntlMessagePipe = (function () {
+var IntlMessagePipe = (function () {
     function IntlMessagePipe(service) {
         this.service = service;
     }
@@ -18,4 +18,5 @@ export var IntlMessagePipe = (function () {
     ]; };
     return IntlMessagePipe;
 }());
+export { IntlMessagePipe };
 //# sourceMappingURL=message-pipe.js.map

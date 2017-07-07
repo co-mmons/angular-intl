@@ -1,6 +1,6 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-export var IntlDateTimeFormatPipe = (function () {
+var IntlDateTimeFormatPipe = (function () {
     function IntlDateTimeFormatPipe(service) {
         this.service = service;
     }
@@ -18,7 +18,8 @@ export var IntlDateTimeFormatPipe = (function () {
     ]; };
     return IntlDateTimeFormatPipe;
 }());
-export var IntlDateFormatPipe = (function () {
+export { IntlDateTimeFormatPipe };
+var IntlDateFormatPipe = (function () {
     function IntlDateFormatPipe(service) {
         this.service = service;
     }
@@ -36,7 +37,8 @@ export var IntlDateFormatPipe = (function () {
     ]; };
     return IntlDateFormatPipe;
 }());
-export var IntlTimeFormatPipe = (function () {
+export { IntlDateFormatPipe };
+var IntlTimeFormatPipe = (function () {
     function IntlTimeFormatPipe(service) {
         this.service = service;
     }
@@ -54,4 +56,5 @@ export var IntlTimeFormatPipe = (function () {
     ]; };
     return IntlTimeFormatPipe;
 }());
+export { IntlTimeFormatPipe };
 //# sourceMappingURL=date-time-format-pipe.js.map

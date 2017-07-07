@@ -1,6 +1,6 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-export var IntlRelativeFormatStaticPipe = (function () {
+var IntlRelativeFormatStaticPipe = (function () {
     function IntlRelativeFormatStaticPipe(service) {
         this.service = service;
     }
@@ -18,7 +18,8 @@ export var IntlRelativeFormatStaticPipe = (function () {
     ]; };
     return IntlRelativeFormatStaticPipe;
 }());
-export var IntlRelativeFormatPipe = (function () {
+export { IntlRelativeFormatStaticPipe };
+var IntlRelativeFormatPipe = (function () {
     function IntlRelativeFormatPipe(service) {
         this.service = service;
         this.callCount = 0;
@@ -61,4 +62,5 @@ export var IntlRelativeFormatPipe = (function () {
     ]; };
     return IntlRelativeFormatPipe;
 }());
+export { IntlRelativeFormatPipe };
 //# sourceMappingURL=relative-format-pipe.js.map

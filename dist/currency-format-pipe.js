@@ -1,6 +1,6 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-export var IntlCurrencyFormatPipe = (function () {
+var IntlCurrencyFormatPipe = (function () {
     function IntlCurrencyFormatPipe(service) {
         this.service = service;
     }
@@ -23,4 +23,5 @@ export var IntlCurrencyFormatPipe = (function () {
     ]; };
     return IntlCurrencyFormatPipe;
 }());
+export { IntlCurrencyFormatPipe };
 //# sourceMappingURL=currency-format-pipe.js.map
