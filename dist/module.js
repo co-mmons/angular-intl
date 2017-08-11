@@ -4,14 +4,15 @@ import { IntlMessagePipe } from "./message-pipe";
 import { IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe } from "./relative-format-pipe";
 import { IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe } from "./date-time-format-pipe";
 import { IntlCurrencyFormatPipe } from "./currency-format-pipe";
+import { IntlValidationErrorMessagePipe } from "./validation-error-message-pipe";
 var IntlModule = (function () {
     function IntlModule() {
     }
     IntlModule.decorators = [
         { type: NgModule, args: [{
-                    declarations: [IntlMessagePipe, IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe, IntlCurrencyFormatPipe],
+                    declarations: [IntlMessagePipe, IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe, IntlCurrencyFormatPipe, IntlValidationErrorMessagePipe],
                     providers: [IntlService],
-                    exports: [IntlMessagePipe, IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe, IntlCurrencyFormatPipe]
+                    exports: [IntlMessagePipe, IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe, IntlCurrencyFormatPipe, IntlValidationErrorMessagePipe]
                 },] },
     ];
     /** @nocollapse */

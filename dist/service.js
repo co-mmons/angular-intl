@@ -47,6 +47,29 @@ var IntlService = (function (_super) {
         browserCultureLang = browserCultureLang || window.navigator.language || window.navigator["browserLanguage"] || window.navigator["userLanguage"];
         return browserCultureLang;
     };
+    IntlService.prototype.validationErrorMessage = function (control) {
+        if (control.errors) {
+            var anyError = false;
+            var error = void 0;
+            for (var code in control.errors) {
+                error = control.errors[code];
+                if (code == "required") {
+                    return "Pole jest wymagane.";
+                }
+                else if (code == "minlength") {
+                    if (error && error.requiredLength > 0) {
+                        return "Minimalna ilo\u015B\u0107 znak\u00F3w wynosi " + error.requiredLength + ".";
+                    }
+                    return "Wartość pola ma za mało znaków.";
+                }
+                anyError = true;
+            }
+            if (anyError) {
+                return "Wartość wygląda na nieprawidłową";
+            }
+        }
+        return undefined;
+    };
     IntlService.decorators = [
         { type: Injectable },
     ];

@@ -1,3 +1,4 @@
+import { AbstractControl } from "@angular/forms";
 import { IntlHelper } from "@co.mmons/js-intl";
 export declare class IntlService extends IntlHelper {
     /**
@@ -13,4 +14,5 @@ export declare class IntlService extends IntlHelper {
      */
     static getBrowserLocale(): string;
     constructor();
+    validationErrorMessage(control: AbstractControl): string;
 }

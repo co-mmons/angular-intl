@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {AbstractControl} from "@angular/forms";
 import {IntlHelper} from "@co.mmons/js-intl";
 
 @Injectable()
@@ -48,5 +49,39 @@ export class IntlService extends IntlHelper {
 
     constructor() {
         super(IntlService.getBrowserLocale());
+    }
+
+    public validationErrorMessage(control: AbstractControl): string {
+
+        if (control.errors) {
+            
+            let anyError = false;
+            let error: any;
+
+            for (let code in control.errors) {
+                error = control.errors[code];
+
+                if (code == "required") {
+                    return "Pole jest wymagane.";
+
+                } else if (code == "minlength") {
+                    
+                    if (error && error.requiredLength > 0) {
+                        return `Minimalna ilość znaków wynosi ${error.requiredLength}.`;
+                    } 
+
+                    return "Wartość pola ma za mało znaków."
+                }
+
+                anyError = true;
+            }
+
+            if (anyError) {
+                return "Wartość wygląda na nieprawidłową";
+            }
+        }
+
+        return undefined;
+
     }
 }
