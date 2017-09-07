@@ -62,6 +62,9 @@ var IntlService = (function (_super) {
                     }
                     return "Wartość pola ma za mało znaków.";
                 }
+                else if (error instanceof Error && error.message) {
+                    return error.message;
+                }
                 anyError = true;
             }
             if (anyError) {
