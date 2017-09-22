@@ -48,7 +48,7 @@ export class IntlService extends IntlHelper {
     }
 
     constructor() {
-        super(IntlService.getBrowserLocale());
+        super(undefined);
     }
 
     public validationErrorMessage(control: AbstractControl): string {

@@ -13,7 +13,7 @@ import { IntlHelper } from "@co.mmons/js-intl";
 var IntlService = (function (_super) {
     __extends(IntlService, _super);
     function IntlService() {
-        return _super.call(this, IntlService.getBrowserLocale()) || this;
+        return _super.call(this, undefined) || this;
     }
     /**
      * Returns the language code name from the browser, e.g. "de"
