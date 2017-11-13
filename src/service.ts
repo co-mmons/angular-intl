@@ -74,6 +74,9 @@ export class IntlService extends IntlHelper {
 
                 } else if (error instanceof Error && error.message) {
                     return error.message;
+                
+                } else if (typeof error == "string") {
+                    return error;
                 }
 
                 anyError = true;

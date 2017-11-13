@@ -65,6 +65,9 @@ var IntlService = (function (_super) {
                 else if (error instanceof Error && error.message) {
                     return error.message;
                 }
+                else if (typeof error == "string") {
+                    return error;
+                }
                 anyError = true;
             }
             if (anyError) {
