@@ -1,6 +1,6 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-var IntlDecimalFormatPipe = (function () {
+var IntlDecimalFormatPipe = /** @class */ (function () {
     function IntlDecimalFormatPipe(service) {
         this.service = service;
     }
@@ -12,15 +12,6 @@ var IntlDecimalFormatPipe = (function () {
             return this.service.decimalFormat(value, predefinedOptionsOrOptions);
         }
     };
-    IntlDecimalFormatPipe.decorators = [
-        { type: Pipe, args: [{
-                    name: "intlDecimalFormat"
-                },] },
-    ];
-    /** @nocollapse */
-    IntlDecimalFormatPipe.ctorParameters = function () { return [
-        { type: IntlService, },
-    ]; };
     return IntlDecimalFormatPipe;
 }());
 export { IntlDecimalFormatPipe };

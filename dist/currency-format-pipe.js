@@ -1,6 +1,6 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-var IntlCurrencyFormatPipe = (function () {
+var IntlCurrencyFormatPipe = /** @class */ (function () {
     function IntlCurrencyFormatPipe(service) {
         this.service = service;
     }
@@ -12,15 +12,6 @@ var IntlCurrencyFormatPipe = (function () {
             return this.service.currencyFormat(value, predefinedOptionsOrOptions);
         }
     };
-    IntlCurrencyFormatPipe.decorators = [
-        { type: Pipe, args: [{
-                    name: "intlCurrencyFormat"
-                },] },
-    ];
-    /** @nocollapse */
-    IntlCurrencyFormatPipe.ctorParameters = function () { return [
-        { type: IntlService, },
-    ]; };
     return IntlCurrencyFormatPipe;
 }());
 export { IntlCurrencyFormatPipe };

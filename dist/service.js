@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import { Injectable } from "@angular/core";
 import { IntlHelper } from "@co.mmons/js-intl";
-var IntlService = (function (_super) {
+var IntlService = /** @class */ (function (_super) {
     __extends(IntlService, _super);
     function IntlService() {
         return _super.call(this, undefined) || this;
@@ -20,7 +20,17 @@ var IntlService = (function (_super) {
      *
      * @returns string
      */
-    IntlService.getBrowserLang = function () {
+    /**
+         * Returns the language code name from the browser, e.g. "de"
+         *
+         * @returns string
+         */
+    IntlService.getBrowserLang = /**
+         * Returns the language code name from the browser, e.g. "de"
+         *
+         * @returns string
+         */
+    function () {
         if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
             return undefined;
         }
@@ -39,7 +49,17 @@ var IntlService = (function (_super) {
      *
      * @returns string
      */
-    IntlService.getBrowserLocale = function () {
+    /**
+         * Returns the culture language code name from the browser, e.g. "de-DE"
+         *
+         * @returns string
+         */
+    IntlService.getBrowserLocale = /**
+         * Returns the culture language code name from the browser, e.g. "de-DE"
+         *
+         * @returns string
+         */
+    function () {
         if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
             return undefined;
         }
@@ -76,11 +96,6 @@ var IntlService = (function (_super) {
         }
         return undefined;
     };
-    IntlService.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    IntlService.ctorParameters = function () { return []; };
     return IntlService;
 }(IntlHelper));
 export { IntlService };

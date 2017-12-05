@@ -1,28 +1,18 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-var IntlRelativeFormatStaticPipe = (function () {
+var IntlRelativeFormatStaticPipe = /** @class */ (function () {
     function IntlRelativeFormatStaticPipe(service) {
         this.service = service;
     }
     IntlRelativeFormatStaticPipe.prototype.transform = function (dateTime, options) {
         return this.service.relativeFormat(dateTime, options);
     };
-    IntlRelativeFormatStaticPipe.decorators = [
-        { type: Pipe, args: [{
-                    name: "intlRelativeFormatStatic"
-                },] },
-    ];
-    /** @nocollapse */
-    IntlRelativeFormatStaticPipe.ctorParameters = function () { return [
-        { type: IntlService, },
-    ]; };
     return IntlRelativeFormatStaticPipe;
 }());
 export { IntlRelativeFormatStaticPipe };
-var IntlRelativeFormatPipe = (function () {
+var IntlRelativeFormatPipe = /** @class */ (function () {
     function IntlRelativeFormatPipe(service) {
         this.service = service;
-        this.callCount = 0;
     }
     IntlRelativeFormatPipe.prototype.transform = function (dateTime, cacheTimeOrOptions, options) {
         var now;
@@ -50,16 +40,6 @@ var IntlRelativeFormatPipe = (function () {
         }
         return result;
     };
-    IntlRelativeFormatPipe.decorators = [
-        { type: Pipe, args: [{
-                    name: "intlRelativeFormat",
-                    pure: false
-                },] },
-    ];
-    /** @nocollapse */
-    IntlRelativeFormatPipe.ctorParameters = function () { return [
-        { type: IntlService, },
-    ]; };
     return IntlRelativeFormatPipe;
 }());
 export { IntlRelativeFormatPipe };

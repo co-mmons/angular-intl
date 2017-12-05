@@ -1,6 +1,6 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-var IntlPercentFormatPipe = (function () {
+var IntlPercentFormatPipe = /** @class */ (function () {
     function IntlPercentFormatPipe(service) {
         this.service = service;
     }
@@ -12,15 +12,6 @@ var IntlPercentFormatPipe = (function () {
             return this.service.percentFormat(value, predefinedOptionsOrOptions);
         }
     };
-    IntlPercentFormatPipe.decorators = [
-        { type: Pipe, args: [{
-                    name: "intlPercentFormat"
-                },] },
-    ];
-    /** @nocollapse */
-    IntlPercentFormatPipe.ctorParameters = function () { return [
-        { type: IntlService, },
-    ]; };
     return IntlPercentFormatPipe;
 }());
 export { IntlPercentFormatPipe };

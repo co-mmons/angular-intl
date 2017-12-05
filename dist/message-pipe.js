@@ -1,21 +1,12 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-var IntlMessagePipe = (function () {
+var IntlMessagePipe = /** @class */ (function () {
     function IntlMessagePipe(service) {
         this.service = service;
     }
     IntlMessagePipe.prototype.transform = function (key, values) {
         return this.service.message(key, values);
     };
-    IntlMessagePipe.decorators = [
-        { type: Pipe, args: [{
-                    name: "intlMessage"
-                },] },
-    ];
-    /** @nocollapse */
-    IntlMessagePipe.ctorParameters = function () { return [
-        { type: IntlService, },
-    ]; };
     return IntlMessagePipe;
 }());
 export { IntlMessagePipe };

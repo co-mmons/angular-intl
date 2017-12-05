@@ -1,6 +1,6 @@
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
-var IntlValidationErrorMessagePipe = (function () {
+var IntlValidationErrorMessagePipe = /** @class */ (function () {
     function IntlValidationErrorMessagePipe(service) {
         this.service = service;
     }
@@ -16,16 +16,6 @@ var IntlValidationErrorMessagePipe = (function () {
         this.lastErrors = undefined;
         this.lastMessage = undefined;
     };
-    IntlValidationErrorMessagePipe.decorators = [
-        { type: Pipe, args: [{
-                    name: "intlValidationErrorMessage",
-                    pure: false
-                },] },
-    ];
-    /** @nocollapse */
-    IntlValidationErrorMessagePipe.ctorParameters = function () { return [
-        { type: IntlService, },
-    ]; };
     return IntlValidationErrorMessagePipe;
 }());
 export { IntlValidationErrorMessagePipe };

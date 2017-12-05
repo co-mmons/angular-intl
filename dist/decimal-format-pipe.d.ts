@@ -1,4 +1,3 @@
-/// <reference types="bignumber.js" />
 import { PipeTransform } from "@angular/core";
 import { BigNumber } from "@co.mmons/js-utils/core";
 import { IntlService } from "./service";
