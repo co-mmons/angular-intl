@@ -2,6 +2,8 @@ import {Injectable} from "@angular/core";
 import {AbstractControl} from "@angular/forms";
 import {IntlHelper} from "@co.mmons/js-intl";
 
+declare var INTL_DEFAULT_LOCALE: string;
+
 @Injectable()
 export class IntlService extends IntlHelper {
 
@@ -17,7 +19,7 @@ export class IntlService extends IntlHelper {
         }
 
         let browserLang: any = window.navigator["languages"] ? window.navigator["languages"][0] : undefined;
-        browserLang = browserLang || window.navigator.language || window.navigator["browserLanguage"] || window.navigator["userLanguage"];
+        browserLang = browserLang || window.navigator.language || window.navigator["browserLanguage"] || window.navigator["userLanguage"] || INTL_DEFAULT_LOCALE;
 
         if (browserLang.indexOf('-') !== -1) {
             browserLang = browserLang.split('-')[0];
@@ -38,13 +40,13 @@ export class IntlService extends IntlHelper {
     static getBrowserLocale(): string {
 
         if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
-            return undefined;
+            return INTL_DEFAULT_LOCALE;
         }
 
         let browserCultureLang: any = window.navigator["languages"] ? window.navigator["languages"][0] : undefined;
         browserCultureLang = browserCultureLang || window.navigator.language || window.navigator["browserLanguage"] || window.navigator["userLanguage"];
 
-        return browserCultureLang;
+        return browserCultureLang || INTL_DEFAULT_LOCALE;
     }
 
     constructor() {

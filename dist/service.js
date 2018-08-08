@@ -34,7 +34,7 @@ var IntlService = /** @class */ (function (_super) {
             return undefined;
         }
         var browserLang = window.navigator["languages"] ? window.navigator["languages"][0] : undefined;
-        browserLang = browserLang || window.navigator.language || window.navigator["browserLanguage"] || window.navigator["userLanguage"];
+        browserLang = browserLang || window.navigator.language || window.navigator["browserLanguage"] || window.navigator["userLanguage"] || INTL_DEFAULT_LOCALE;
         if (browserLang.indexOf('-') !== -1) {
             browserLang = browserLang.split('-')[0];
         }
@@ -50,11 +50,11 @@ var IntlService = /** @class */ (function (_super) {
      */
     IntlService.getBrowserLocale = function () {
         if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
-            return undefined;
+            return INTL_DEFAULT_LOCALE;
         }
         var browserCultureLang = window.navigator["languages"] ? window.navigator["languages"][0] : undefined;
         browserCultureLang = browserCultureLang || window.navigator.language || window.navigator["browserLanguage"] || window.navigator["userLanguage"];
-        return browserCultureLang;
+        return browserCultureLang || INTL_DEFAULT_LOCALE;
     };
     IntlService.prototype.validationErrorMessage = function (control) {
         if (control.errors) {
