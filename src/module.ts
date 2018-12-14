@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import {NgModule, Optional, SkipSelf, ModuleWithProviders} from "@angular/core";
 import {IntlCurrencyFormatPipe} from "./currency-format-pipe";
 import {IntlDateFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe} from "./date-time-format-pipe";
 import {IntlDecimalFormatPipe} from "./decimal-format-pipe";
@@ -15,4 +15,15 @@ import {IntlValuePipe} from "./value-pipe";
     exports: [IntlValuePipe, IntlMessagePipe, IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe, IntlCurrencyFormatPipe, IntlDecimalFormatPipe, IntlPercentFormatPipe, IntlValidationErrorMessagePipe]
 })
 export class IntlModule {
+
+    static forRoot(): ModuleWithProviders {
+        return {ngModule: IntlModule};
+    }
+    
+    constructor(@Optional() @SkipSelf() parentModule: IntlModule) {
+        if (parentModule) {
+            throw new Error("IntlModule is already loaded. Import it in the app module only");
+        }
+    }
+
 }
