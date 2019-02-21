@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {AbstractControl} from "@angular/forms";
-import {IntlHelper} from "@co.mmons/js-intl";
+import {IntlHelper, MessageRef} from "@co.mmons/js-intl";
 
 declare var INTL_DEFAULT_LOCALE: string;
 
@@ -64,19 +64,22 @@ export class IntlService extends IntlHelper {
                 error = control.errors[code];
 
                 if (code == "required") {
-                    return "Pole jest wymagane.";
+                    return this.message("@co.mmons/angular-intl#validation/requiredError");
 
                 } else if (code == "minlength") {
-                    
-                    if (error && error.requiredLength > 0) {
-                        return `Minimalna ilość znaków wynosi ${error.requiredLength}.`;
-                    } 
-
-                    return "Wartość pola ma za mało znaków."
+                    return this.message("@co.mmons/angular-intl#validation/minLengthError", {length: (error && error.requiredLength) || 0});
 
                 } else if (error instanceof Error && error.message) {
+
+                    if (<any>error.message instanceof MessageRef) {
+                        this.message(error.message);
+                    }
+
                     return error.message;
-                
+
+                } else if (error instanceof MessageRef) {
+                    return this.message(error);
+
                 } else if (typeof error == "string") {
                     return error;
                 }
@@ -85,7 +88,7 @@ export class IntlService extends IntlHelper {
             }
 
             if (anyError) {
-                return "Wartość wygląda na nieprawidłową";
+                return this.message("@co.mmons/angular-intl#validation/invalidValueError");
             }
         }
 

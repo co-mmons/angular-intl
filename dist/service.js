@@ -18,7 +18,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from "@angular/core";
-import { IntlHelper } from "@co.mmons/js-intl";
+import { IntlHelper, MessageRef } from "@co.mmons/js-intl";
 var IntlService = /** @class */ (function (_super) {
     __extends(IntlService, _super);
     function IntlService() {
@@ -63,16 +63,19 @@ var IntlService = /** @class */ (function (_super) {
             for (var code in control.errors) {
                 error = control.errors[code];
                 if (code == "required") {
-                    return "Pole jest wymagane.";
+                    return this.message("@co.mmons/angular-intl#validation/requiredError");
                 }
                 else if (code == "minlength") {
-                    if (error && error.requiredLength > 0) {
-                        return "Minimalna ilo\u015B\u0107 znak\u00F3w wynosi " + error.requiredLength + ".";
-                    }
-                    return "Wartość pola ma za mało znaków.";
+                    return this.message("@co.mmons/angular-intl#validation/minLengthError", { length: (error && error.requiredLength) || 0 });
                 }
                 else if (error instanceof Error && error.message) {
+                    if (error.message instanceof MessageRef) {
+                        this.message(error.message);
+                    }
                     return error.message;
+                }
+                else if (error instanceof MessageRef) {
+                    return this.message(error);
                 }
                 else if (typeof error == "string") {
                     return error;
@@ -80,7 +83,7 @@ var IntlService = /** @class */ (function (_super) {
                 anyError = true;
             }
             if (anyError) {
-                return "Wartość wygląda na nieprawidłową";
+                return this.message("@co.mmons/angular-intl#validation/invalidValueError");
             }
         }
         return undefined;
