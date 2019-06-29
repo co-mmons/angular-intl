@@ -21,6 +21,7 @@ var IntlModule = /** @class */ (function () {
     IntlModule.forRoot = function () {
         return { ngModule: IntlModule_1, providers: [IntlService] };
     };
+    var IntlModule_1;
     IntlModule = IntlModule_1 = __decorate([
         NgModule({
             declarations: [IntlValuePipe, IntlMessagePipe, IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe, IntlCurrencyFormatPipe, IntlDecimalFormatPipe, IntlPercentFormatPipe, IntlValidationErrorMessagePipe],
@@ -28,7 +29,6 @@ var IntlModule = /** @class */ (function () {
         })
     ], IntlModule);
     return IntlModule;
-    var IntlModule_1;
 }());
 export { IntlModule };
 //# sourceMappingURL=module.js.map
