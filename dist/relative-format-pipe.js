@@ -1,12 +1,4 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+import * as tslib_1 from "tslib";
 import { Pipe } from "@angular/core";
 import { IntlService } from "./service";
 var IntlRelativeFormatStaticPipe = /** @class */ (function () {
@@ -16,11 +8,11 @@ var IntlRelativeFormatStaticPipe = /** @class */ (function () {
     IntlRelativeFormatStaticPipe.prototype.transform = function (dateTime, options) {
         return this.service.relativeFormat(dateTime, options);
     };
-    IntlRelativeFormatStaticPipe = __decorate([
+    IntlRelativeFormatStaticPipe = tslib_1.__decorate([
         Pipe({
             name: "intlRelativeFormatStatic"
         }),
-        __metadata("design:paramtypes", [IntlService])
+        tslib_1.__metadata("design:paramtypes", [IntlService])
     ], IntlRelativeFormatStaticPipe);
     return IntlRelativeFormatStaticPipe;
 }());
@@ -56,12 +48,12 @@ var IntlRelativeFormatPipe = /** @class */ (function () {
         }
         return result;
     };
-    IntlRelativeFormatPipe = __decorate([
+    IntlRelativeFormatPipe = tslib_1.__decorate([
         Pipe({
             name: "intlRelativeFormat",
             pure: false
         }),
-        __metadata("design:paramtypes", [IntlService])
+        tslib_1.__metadata("design:paramtypes", [IntlService])
     ], IntlRelativeFormatPipe);
     return IntlRelativeFormatPipe;
 }());
