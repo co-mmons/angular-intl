@@ -1,5 +1,5 @@
 import { PipeTransform } from "@angular/core";
-import { Money, CurrencyAndNumber } from "@co.mmons/js-intl";
+import { CurrencyAndNumber, Money } from "@co.mmons/js-intl";
 import { IntlService } from "./service";
 export declare class IntlCurrencyFormatPipe implements PipeTransform {
     private service;

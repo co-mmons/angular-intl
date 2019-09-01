@@ -1,5 +1,5 @@
 import { PipeTransform } from "@angular/core";
-import { BigNumber } from "@co.mmons/js-utils/core";
+import { BigNumber } from "bignumber.js";
 import { IntlService } from "./service";
 export declare class IntlDecimalFormatPipe implements PipeTransform {
     private service;

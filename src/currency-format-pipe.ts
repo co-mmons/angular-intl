@@ -1,6 +1,5 @@
 import {Pipe, PipeTransform} from "@angular/core";
-import {BigNumber} from "@co.mmons/js-utils/core";
-import {Money, Currency, CurrencyAndNumber} from "@co.mmons/js-intl";
+import {CurrencyAndNumber, Money} from "@co.mmons/js-intl";
 
 import {IntlService} from "./service";
 
