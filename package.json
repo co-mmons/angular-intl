@@ -5,14 +5,12 @@
   "private": false,
   "license": "MIT",
   "scripts": {
-    "build": "ngc && gcp -rf -t dist package.json",
-    "install": "node-utils-npm-install-dist"
+    "build": "npx ts-node --project tsconfig.build.json build.ts",
+    "messages:validation": "js-intl-google-sheet-importer --output-path messages/validation --output-type json --document 1lTpcwU0ubFX7bJFCt8zeHYrwbDaoxNcjzpjUVdmiY_w --worksheet 1 --filterTags angular-intl"
   },
-  "dependencies": {
-    "@co.mmons/node-utils": "git+https://github.com/co-mmons/node-utils.git",
-    "@co.mmons/js-utils": "git+https://github.com/co-mmons/js-utils.git",
-    "@co.mmons/js-intl": "git+https://github.com/co-mmons/js-intl.git"
-  },
+  "main": "dist/esm2015/index.js",
+  "typings": "dist/angular-intl.d.ts",
+  "metadata": "dist/angular-intl.metadata.json",
   "peerDependencies": {
     "@angular/common": "^8.0.3",
     "@angular/compiler": "^8.0.3",
@@ -20,13 +18,25 @@
     "@angular/core": "^8.0.3",
     "@angular/forms": "^8.0.3",
     "@angular/platform-browser": "^8.0.3",
-    "rxjs": "^6.5.2",
-    "zone.js": "^0.9.1"
+    "@co.mmons/js-utils": "git+https://github.com/co-mmons/js-utils.git",
+    "@co.mmons/js-intl": "git+https://github.com/co-mmons/js-intl.git",
+    "rxjs": "^6.5.2"
   },
   "devDependencies": {
-    "@types/intl-messageformat": "^3.0.0",
-    "@types/intl-relativeformat": "git+https://github.com/co-mmons/types-intl-relativeformat.git",
+    "@co.mmons/node-utils": "git+https://github.com/co-mmons/node-utils.git",
     "bignumber.js": "^9.0.0",
-    "typescript": "~3.4.0"
+    "ng-packagr": "^5.5.1",
+    "ts-node": "^8.4.1",
+    "typescript": "~3.4.0",
+    "zone.js": "^0.9.1"
+  },
+  "sideEffects": false,
+  "ngPackage": {
+    "dest": "dist",
+    "deleteDestPath": true,
+    "lib": {
+      "entryFile": "src/index.ts",
+      "flatModuleFile": "angular-intl"
+    }
   }
 }
