@@ -1,4 +1,3 @@
-import {removeSync} from "fs-extra";
 import * as packager from "ng-packagr";
 
 (async () => {
@@ -13,12 +12,6 @@ import * as packager from "ng-packagr";
         } catch (error) {
             console.error(error);
             process.exit(0);
-        }
-
-        // removeSync("dist/package.json");
-
-        for (const dir of ["esm5", "fesm5", "fesm2015"]) {
-            removeSync(`dist/${dir}`);
         }
 
     } catch (error) {

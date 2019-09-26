@@ -6,6 +6,11 @@
   "license": "MIT",
   "main": "bundles/angular-intl.umd.js",
   "module": "fesm5/angular-intl.js",
+  "es2015": "fesm2015/angular-intl.js",
+  "esm5": "esm5/angular-intl.js",
+  "esm2015": "esm2015/angular-intl.js",
+  "fesm5": "fesm5/angular-intl.js",
+  "fesm2015": "fesm2015/angular-intl.js",
   "typings": "angular-intl.d.ts",
   "metadata": "angular-intl.metadata.json",
   "peerDependencies": {
@@ -28,11 +33,6 @@
     "zone.js": "^0.9.1"
   },
   "sideEffects": false,
-  "es2015": "fesm2015/angular-intl.js",
-  "esm5": "esm5/angular-intl.js",
-  "esm2015": "esm2015/angular-intl.js",
-  "fesm5": "fesm5/angular-intl.js",
-  "fesm2015": "fesm2015/angular-intl.js",
   "dependencies": {
     "tslib": "^1.9.0"
   }
