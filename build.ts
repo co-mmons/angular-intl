@@ -17,7 +17,7 @@ import * as packager from "ng-packagr";
 
         // removeSync("dist/package.json");
 
-        for (const dir of ["esm5", "fesm5", "fesm2015", "bundles"]) {
+        for (const dir of ["esm5", "fesm5", "fesm2015"]) {
             removeSync(`dist/${dir}`);
         }
 

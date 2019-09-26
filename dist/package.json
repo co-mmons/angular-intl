@@ -5,6 +5,7 @@
   "private": false,
   "license": "MIT",
   "main": "bundles/angular-intl.umd.js",
+  "module": "fesm5/angular-intl.js",
   "typings": "angular-intl.d.ts",
   "metadata": "angular-intl.metadata.json",
   "peerDependencies": {
@@ -27,7 +28,6 @@
     "zone.js": "^0.9.1"
   },
   "sideEffects": false,
-  "module": "fesm5/angular-intl.js",
   "es2015": "fesm2015/angular-intl.js",
   "esm5": "esm5/angular-intl.js",
   "esm2015": "esm2015/angular-intl.js",
