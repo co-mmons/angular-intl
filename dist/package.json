@@ -33,6 +33,13 @@
     "zone.js": "^0.9.1"
   },
   "sideEffects": false,
+  "intlBundleItems": [
+    {
+      "type": "message",
+      "path": "./messages/validation/{{LOCALE}}.json",
+      "namespace": "@co.mmons/angular-intl/validation"
+    }
+  ],
   "dependencies": {
     "tslib": "^1.9.0"
   }

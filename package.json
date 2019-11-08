@@ -44,5 +44,8 @@
       "entryFile": "src/index.ts",
       "flatModuleFile": "angular-intl"
     }
-  }
+  },
+  "intlBundleItems": [
+    {"type": "message", "path": "./messages/validation/{{LOCALE}}.json", "namespace": "@co.mmons/angular-intl/validation"}
+  ]
 }
