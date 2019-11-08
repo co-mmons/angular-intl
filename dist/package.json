@@ -36,8 +36,7 @@
   "intlBundleItems": [
     {
       "type": "message",
-      "path": "./messages/validation/{{LOCALE}}.json",
-      "namespace": "@co.mmons/angular-intl/validation"
+      "path": "./messages/{{LOCALE}}.json"
     }
   ],
   "dependencies": {

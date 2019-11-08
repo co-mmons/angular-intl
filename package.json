@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npx ts-node --project tsconfig.build.json build.ts",
-    "messages:validation": "js-intl-google-sheet-importer --output-path messages/validation --output-type json --document 1lTpcwU0ubFX7bJFCt8zeHYrwbDaoxNcjzpjUVdmiY_w --worksheet 1 --filterTags angular-intl"
+    "messages": "js-intl-google-sheet-importer --output-path messages --output-type json --document 1lTpcwU0ubFX7bJFCt8zeHYrwbDaoxNcjzpjUVdmiY_w --worksheet 1 --filterTags angular-intl"
   },
   "main": "dist/bundles/angular-intl.umd.js",
   "module": "dist/fesm2015/angular-intl.js",
@@ -46,6 +46,6 @@
     }
   },
   "intlBundleItems": [
-    {"type": "message", "path": "./messages/validation/{{LOCALE}}.json", "namespace": "@co.mmons/angular-intl/validation"}
+    {"type": "message", "path": "./messages/{{LOCALE}}.json"}
   ]
 }
