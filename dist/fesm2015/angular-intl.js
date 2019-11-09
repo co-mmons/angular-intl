@@ -4,9 +4,6 @@ import { IntlHelper, MessageRef } from '@co.mmons/js-intl';
 export * from '@co.mmons/js-intl';
 
 let IntlService = class IntlService extends IntlHelper {
-    constructor() {
-        super(undefined);
-    }
     /**
      * Returns the language code name from the browser, e.g. "de"
      *
@@ -38,6 +35,9 @@ let IntlService = class IntlService extends IntlHelper {
         let browserCultureLang = window.navigator["languages"] ? window.navigator["languages"][0] : undefined;
         browserCultureLang = browserCultureLang || window.navigator.language || window.navigator["browserLanguage"] || window.navigator["userLanguage"];
         return browserCultureLang || INTL_DEFAULT_LOCALE;
+    }
+    constructor() {
+        super(undefined);
     }
     validationErrorMessage(control) {
         if (control.errors) {

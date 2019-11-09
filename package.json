@@ -18,12 +18,12 @@
   "typings": "dist/angular-intl.d.ts",
   "metadata": "dist/angular-intl.metadata.json",
   "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/compiler": "^8.0.3",
-    "@angular/compiler-cli": "^8.0.3",
-    "@angular/core": "^8.0.3",
-    "@angular/forms": "^8.0.3",
-    "@angular/platform-browser": "^8.0.3",
+    "@angular/common": "^9.0.0-rc.1",
+    "@angular/compiler": "^9.0.0-rc.1",
+    "@angular/compiler-cli": "^9.0.0-rc.1",
+    "@angular/core": "^9.0.0-rc.1",
+    "@angular/forms": "^9.0.0-rc.1",
+    "@angular/platform-browser": "^9.0.0-rc.1",
     "@co.mmons/js-utils": "git+https://github.com/co-mmons/js-utils.git",
     "@co.mmons/js-intl": "git+https://github.com/co-mmons/js-intl.git",
     "rxjs": "^6.5.2"
@@ -33,7 +33,7 @@
     "bignumber.js": "^9.0.0",
     "ng-packagr": "^5.5.1",
     "ts-node": "^8.4.1",
-    "typescript": "~3.4.0",
+    "typescript": "~3.6.0",
     "zone.js": "^0.9.1"
   },
   "sideEffects": false,
@@ -46,6 +46,9 @@
     }
   },
   "intlBundleItems": [
-    {"type": "message", "path": "./messages/{{LOCALE}}.json"}
+    {
+      "type": "message",
+      "path": "./messages/{{LOCALE}}.json"
+    }
   ]
 }

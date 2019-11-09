@@ -1,5 +1,5 @@
-import * as tslib_1 from "tslib";
 var IntlModule_1;
+import { __decorate } from "tslib";
 import { NgModule } from "@angular/core";
 import { IntlCurrencyFormatPipe } from "./currency-format-pipe";
 import { IntlDateFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe } from "./date-time-format-pipe";
@@ -15,7 +15,7 @@ let IntlModule = IntlModule_1 = class IntlModule {
         return { ngModule: IntlModule_1, providers: [IntlService] };
     }
 };
-IntlModule = IntlModule_1 = tslib_1.__decorate([
+IntlModule = IntlModule_1 = __decorate([
     NgModule({
         declarations: [IntlValuePipe, IntlMessagePipe, IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe, IntlCurrencyFormatPipe, IntlDecimalFormatPipe, IntlPercentFormatPipe, IntlValidationErrorMessagePipe],
         exports: [IntlValuePipe, IntlMessagePipe, IntlRelativeFormatStaticPipe, IntlRelativeFormatPipe, IntlDateTimeFormatPipe, IntlTimeFormatPipe, IntlDateFormatPipe, IntlCurrencyFormatPipe, IntlDecimalFormatPipe, IntlPercentFormatPipe, IntlValidationErrorMessagePipe]
