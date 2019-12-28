@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@co.mmons/js-intl')) :
     typeof define === 'function' && define.amd ? define('@co.mmons/angular-intl', ['exports', '@angular/core', '@co.mmons/js-intl'], factory) :
     (global = global || self, factory((global.co = global.co || {}, global.co.mmons = global.co.mmons || {}, global.co.mmons['angular-intl'] = {}), global.ng.core, global.jsIntl));
-}(this, function (exports, core, jsIntl) { 'use strict';
+}(this, (function (exports, core, jsIntl) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -271,8 +271,7 @@
             return undefined;
         };
         IntlService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [])
+            core.Injectable()
         ], IntlService);
         return IntlService;
     }(jsIntl.IntlHelper));
@@ -295,8 +294,7 @@
         IntlCurrencyFormatPipe = __decorate([
             core.Pipe({
                 name: "intlCurrencyFormat"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlCurrencyFormatPipe);
         return IntlCurrencyFormatPipe;
     }());
@@ -314,8 +312,7 @@
         IntlDateTimeFormatPipe = __decorate([
             core.Pipe({
                 name: "intlDateTimeFormat"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlDateTimeFormatPipe);
         return IntlDateTimeFormatPipe;
     }());
@@ -332,8 +329,7 @@
         IntlDateFormatPipe = __decorate([
             core.Pipe({
                 name: "intlDateFormat"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlDateFormatPipe);
         return IntlDateFormatPipe;
     }());
@@ -350,8 +346,7 @@
         IntlTimeFormatPipe = __decorate([
             core.Pipe({
                 name: "intlTimeFormat"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlTimeFormatPipe);
         return IntlTimeFormatPipe;
     }());
@@ -374,8 +369,7 @@
         IntlDecimalFormatPipe = __decorate([
             core.Pipe({
                 name: "intlDecimalFormat"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlDecimalFormatPipe);
         return IntlDecimalFormatPipe;
     }());
@@ -393,8 +387,7 @@
         IntlMessagePipe = __decorate([
             core.Pipe({
                 name: "intlMessage"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlMessagePipe);
         return IntlMessagePipe;
     }());
@@ -417,8 +410,7 @@
         IntlPercentFormatPipe = __decorate([
             core.Pipe({
                 name: "intlPercentFormat"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlPercentFormatPipe);
         return IntlPercentFormatPipe;
     }());
@@ -436,8 +428,7 @@
         IntlRelativeFormatStaticPipe = __decorate([
             core.Pipe({
                 name: "intlRelativeFormatStatic"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlRelativeFormatStaticPipe);
         return IntlRelativeFormatStaticPipe;
     }());
@@ -479,8 +470,7 @@
             core.Pipe({
                 name: "intlRelativeFormat",
                 pure: false
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlRelativeFormatPipe);
         return IntlRelativeFormatPipe;
     }());
@@ -508,8 +498,7 @@
             core.Pipe({
                 name: "intlValidationErrorMessage",
                 pure: false
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlValidationErrorMessagePipe);
         return IntlValidationErrorMessagePipe;
     }());
@@ -527,8 +516,7 @@
         IntlValuePipe = __decorate([
             core.Pipe({
                 name: "intlValue"
-            }),
-            __metadata("design:paramtypes", [IntlService])
+            })
         ], IntlValuePipe);
         return IntlValuePipe;
     }());
@@ -574,5 +562,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=angular-intl.umd.js.map

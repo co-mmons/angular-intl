@@ -1,4 +1,4 @@
-import { __decorate, __metadata } from 'tslib';
+import { __decorate } from 'tslib';
 import { Injectable, Pipe, NgModule } from '@angular/core';
 import { IntlHelper, MessageRef } from '@co.mmons/js-intl';
 export * from '@co.mmons/js-intl';
@@ -73,8 +73,7 @@ let IntlService = class IntlService extends IntlHelper {
     }
 };
 IntlService = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [])
+    Injectable()
 ], IntlService);
 
 let IntlCurrencyFormatPipe = class IntlCurrencyFormatPipe {
@@ -96,8 +95,7 @@ IntlCurrencyFormatPipe.ctorParameters = () => [
 IntlCurrencyFormatPipe = __decorate([
     Pipe({
         name: "intlCurrencyFormat"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlCurrencyFormatPipe);
 
 let IntlDateTimeFormatPipe = class IntlDateTimeFormatPipe {
@@ -114,8 +112,7 @@ IntlDateTimeFormatPipe.ctorParameters = () => [
 IntlDateTimeFormatPipe = __decorate([
     Pipe({
         name: "intlDateTimeFormat"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlDateTimeFormatPipe);
 let IntlDateFormatPipe = class IntlDateFormatPipe {
     constructor(service) {
@@ -131,8 +128,7 @@ IntlDateFormatPipe.ctorParameters = () => [
 IntlDateFormatPipe = __decorate([
     Pipe({
         name: "intlDateFormat"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlDateFormatPipe);
 let IntlTimeFormatPipe = class IntlTimeFormatPipe {
     constructor(service) {
@@ -148,8 +144,7 @@ IntlTimeFormatPipe.ctorParameters = () => [
 IntlTimeFormatPipe = __decorate([
     Pipe({
         name: "intlTimeFormat"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlTimeFormatPipe);
 
 let IntlDecimalFormatPipe = class IntlDecimalFormatPipe {
@@ -171,8 +166,7 @@ IntlDecimalFormatPipe.ctorParameters = () => [
 IntlDecimalFormatPipe = __decorate([
     Pipe({
         name: "intlDecimalFormat"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlDecimalFormatPipe);
 
 let IntlMessagePipe = class IntlMessagePipe {
@@ -189,8 +183,7 @@ IntlMessagePipe.ctorParameters = () => [
 IntlMessagePipe = __decorate([
     Pipe({
         name: "intlMessage"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlMessagePipe);
 
 let IntlPercentFormatPipe = class IntlPercentFormatPipe {
@@ -212,8 +205,7 @@ IntlPercentFormatPipe.ctorParameters = () => [
 IntlPercentFormatPipe = __decorate([
     Pipe({
         name: "intlPercentFormat"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlPercentFormatPipe);
 
 let IntlRelativeFormatStaticPipe = class IntlRelativeFormatStaticPipe {
@@ -230,8 +222,7 @@ IntlRelativeFormatStaticPipe.ctorParameters = () => [
 IntlRelativeFormatStaticPipe = __decorate([
     Pipe({
         name: "intlRelativeFormatStatic"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlRelativeFormatStaticPipe);
 let IntlRelativeFormatPipe = class IntlRelativeFormatPipe {
     constructor(service) {
@@ -272,8 +263,7 @@ IntlRelativeFormatPipe = __decorate([
     Pipe({
         name: "intlRelativeFormat",
         pure: false
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlRelativeFormatPipe);
 
 let IntlValidationErrorMessagePipe = class IntlValidationErrorMessagePipe {
@@ -300,8 +290,7 @@ IntlValidationErrorMessagePipe = __decorate([
     Pipe({
         name: "intlValidationErrorMessage",
         pure: false
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlValidationErrorMessagePipe);
 
 let IntlValuePipe = class IntlValuePipe {
@@ -318,8 +307,7 @@ IntlValuePipe.ctorParameters = () => [
 IntlValuePipe = __decorate([
     Pipe({
         name: "intlValue"
-    }),
-    __metadata("design:paramtypes", [IntlService])
+    })
 ], IntlValuePipe);
 
 var IntlModule_1;

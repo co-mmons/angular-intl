@@ -1,4 +1,4 @@
-import { __extends, __decorate, __metadata } from 'tslib';
+import { __extends, __decorate } from 'tslib';
 import { Injectable, Pipe, NgModule } from '@angular/core';
 import { MessageRef, IntlHelper } from '@co.mmons/js-intl';
 export * from '@co.mmons/js-intl';
@@ -73,8 +73,7 @@ var IntlService = /** @class */ (function (_super) {
         return undefined;
     };
     IntlService = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [])
+        Injectable()
     ], IntlService);
     return IntlService;
 }(IntlHelper));
@@ -97,8 +96,7 @@ var IntlCurrencyFormatPipe = /** @class */ (function () {
     IntlCurrencyFormatPipe = __decorate([
         Pipe({
             name: "intlCurrencyFormat"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlCurrencyFormatPipe);
     return IntlCurrencyFormatPipe;
 }());
@@ -116,8 +114,7 @@ var IntlDateTimeFormatPipe = /** @class */ (function () {
     IntlDateTimeFormatPipe = __decorate([
         Pipe({
             name: "intlDateTimeFormat"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlDateTimeFormatPipe);
     return IntlDateTimeFormatPipe;
 }());
@@ -134,8 +131,7 @@ var IntlDateFormatPipe = /** @class */ (function () {
     IntlDateFormatPipe = __decorate([
         Pipe({
             name: "intlDateFormat"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlDateFormatPipe);
     return IntlDateFormatPipe;
 }());
@@ -152,8 +148,7 @@ var IntlTimeFormatPipe = /** @class */ (function () {
     IntlTimeFormatPipe = __decorate([
         Pipe({
             name: "intlTimeFormat"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlTimeFormatPipe);
     return IntlTimeFormatPipe;
 }());
@@ -176,8 +171,7 @@ var IntlDecimalFormatPipe = /** @class */ (function () {
     IntlDecimalFormatPipe = __decorate([
         Pipe({
             name: "intlDecimalFormat"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlDecimalFormatPipe);
     return IntlDecimalFormatPipe;
 }());
@@ -195,8 +189,7 @@ var IntlMessagePipe = /** @class */ (function () {
     IntlMessagePipe = __decorate([
         Pipe({
             name: "intlMessage"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlMessagePipe);
     return IntlMessagePipe;
 }());
@@ -219,8 +212,7 @@ var IntlPercentFormatPipe = /** @class */ (function () {
     IntlPercentFormatPipe = __decorate([
         Pipe({
             name: "intlPercentFormat"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlPercentFormatPipe);
     return IntlPercentFormatPipe;
 }());
@@ -238,8 +230,7 @@ var IntlRelativeFormatStaticPipe = /** @class */ (function () {
     IntlRelativeFormatStaticPipe = __decorate([
         Pipe({
             name: "intlRelativeFormatStatic"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlRelativeFormatStaticPipe);
     return IntlRelativeFormatStaticPipe;
 }());
@@ -281,8 +272,7 @@ var IntlRelativeFormatPipe = /** @class */ (function () {
         Pipe({
             name: "intlRelativeFormat",
             pure: false
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlRelativeFormatPipe);
     return IntlRelativeFormatPipe;
 }());
@@ -310,8 +300,7 @@ var IntlValidationErrorMessagePipe = /** @class */ (function () {
         Pipe({
             name: "intlValidationErrorMessage",
             pure: false
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlValidationErrorMessagePipe);
     return IntlValidationErrorMessagePipe;
 }());
@@ -329,8 +318,7 @@ var IntlValuePipe = /** @class */ (function () {
     IntlValuePipe = __decorate([
         Pipe({
             name: "intlValue"
-        }),
-        __metadata("design:paramtypes", [IntlService])
+        })
     ], IntlValuePipe);
     return IntlValuePipe;
 }());
