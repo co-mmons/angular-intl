@@ -9,7 +9,7 @@
     "messages": "js-intl-google-sheet-importer --output-path messages --output-type json --document 1lTpcwU0ubFX7bJFCt8zeHYrwbDaoxNcjzpjUVdmiY_w --worksheet 1 --filterTags angular-intl"
   },
   "main": "dist/bundles/angular-intl.umd.js",
-  "module": "dist/fesm2015/angular-intl.js",
+  "module": "dist/fesm5/angular-intl.js",
   "es2015": "dist/fesm2015/angular-intl.js",
   "esm5": "dist/esm5/angular-intl.js",
   "esm2015": "dist/esm2015/angular-intl.js",
