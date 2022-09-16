@@ -26,7 +26,7 @@
     "@angular/platform-browser": "^12.0.0",
     "@co.mmons/js-utils": "git+https://github.com/co-mmons/js-utils.git",
     "@co.mmons/js-intl": "git+https://github.com/co-mmons/js-intl.git",
-    "rxjs": "^6.5.2"
+    "rxjs": "^7.0.0"
   },
   "devDependencies": {
     "@co.mmons/node-utils": "git+https://github.com/co-mmons/node-utils.git",
