@@ -18,12 +18,12 @@
   "typings": "dist/angular-intl.d.ts",
   "metadata": "dist/angular-intl.metadata.json",
   "peerDependencies": {
-    "@angular/common": "^10.0.0",
-    "@angular/compiler": "^10.0.0",
-    "@angular/compiler-cli": "^10.0.0",
-    "@angular/core": "^10.0.0",
-    "@angular/forms": "^10.0.0",
-    "@angular/platform-browser": "^10.0.0",
+    "@angular/common": "^12.0.0",
+    "@angular/compiler": "^12.0.0",
+    "@angular/compiler-cli": "^12.0.0",
+    "@angular/core": "^12.0.0",
+    "@angular/forms": "^12.0.0",
+    "@angular/platform-browser": "^12.0.0",
     "@co.mmons/js-utils": "git+https://github.com/co-mmons/js-utils.git",
     "@co.mmons/js-intl": "git+https://github.com/co-mmons/js-intl.git",
     "rxjs": "^6.5.2"
